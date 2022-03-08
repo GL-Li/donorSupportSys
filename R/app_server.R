@@ -10,37 +10,8 @@ app_server <- function( input, output, session ) {
     # donor ====================================================================
     
     ## home ----
-    output$click_descriptive <- renderValueBox({
-        valueBox(
-            value = actionLink(
-                inputId = "link_descriptive",
-                label = div("Descriptive analysis", 
-                            style = "color: white; font-size: 30px")
-            ),
-            subtitle = "",
-            color = "light-blue"
-        )
-    })
+    mod_home_server("home_1")
     
-    observeEvent(input$link_descriptive, {
-        updateTabItems(session, inputId = "tabs", selected = "descriptive")
-    })
-    
-    output$click_predictive <- renderValueBox({
-        valueBox(
-            value = actionLink(
-                inputId = "link_predictive",
-                label = div("Predictive analysis", 
-                            style = "color: white; font-size: 30px")
-            ),
-            subtitle = "",
-            color = "light-blue"
-        )
-    })
-    
-    observeEvent(input$link_predictive, {
-        updateTabItems(session, inputId = "tabs", selected = "predictive")
-    })
     
     ## descriptive analysis ====================================================
     
@@ -220,39 +191,7 @@ app_server <- function( input, output, session ) {
     # volunteer ===============================================================
     
     ## home ----
-    
-    output$click_descriptive_2 <- renderValueBox({
-        valueBox(
-            value = actionLink(
-                inputId = "link_descriptive_2",
-                label = div("Descriptive analysis", 
-                            style = "color: white; font-size: 30px")
-            ),
-            subtitle = "",
-            color = "light-blue"
-        )
-    })
-    
-    observeEvent(input$link_descriptive_2, {
-        updateTabItems(session, inputId = "tabs_2", selected = "descriptive_2")
-    })
-    
-    output$click_predictive_2 <- renderValueBox({
-        valueBox(
-            value = actionLink(
-                inputId = "link_predictive_2",
-                label = div("Predictive analysis", 
-                            style = "color: white; font-size: 30px")
-            ),
-            subtitle = "",
-            color = "light-blue"
-        )
-    })
-    
-    observeEvent(input$link_predictive_2, {
-        updateTabItems(session, inputId = "tabs_2", selected = "predictive_2")
-    })
-    
+    mod_home_server("home_2")
     
     
     ## descriptive analysis ====================================================

@@ -11,7 +11,7 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 
 ## Installation
 
-You can install the development version of twstrade from
+You can install the development version from
 [GitHub](https://github.com/) with:
 
 ``` r

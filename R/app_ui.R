@@ -47,69 +47,64 @@ app_ui <- function(request) {
           
           ## Body content
           dashboardBody(
-            ## modify css  ----
-            # tags$head(tags$style(includeCSS("asset/custom.css"))),
-            
-            
+
             tabItems(
-              
-              
+
               ## home ----
               
               tabItem(
                 "home",
                 # a("aaa", href = "#shiny-tab-predictive", "data-toggle" = "tab"),
-                column(12,
-                       img(src = "www/logo.png"),
-                       align = "center"),
-                fluidRow(
-                  column(2),
-                  column(8,
-                         valueBox("Wellcome to AI-enabled DSS to analyse donnors behaviour",
-                                  subtitle = "",
-                                  width = 12,
-                                  color = "orange"),
-                         align = "center"),
-                  column(2)
-                ),
                 
-                
-                tags$head(tags$style(HTML(
-                  "#div_des .tooltip-inner {text-align: left;}",
-                  "#div_pred .tooltip-inner {text-align: left;}"
-                ))),
-                fluidRow(
-                  column(2),
-                  column(
-                    4,
-                    div(
-                      id = "div_des",
-                      valueBoxOutput("click_descriptive", width = 12),
-                      bsTooltip("click_descriptive",  
-                                "View the descriptive statistics of the data.", 
-                                placement = "bottom", 
-                                trigger = "hover",
-                                options = NULL),
-                      align = "center"
-                    ),
-                    
-                  ),
-                  
-                  column(
-                    4,
-                    div(
-                      id = "div_pred",
-                      valueBoxOutput("click_predictive", width = 12),
-                      bsTooltip("click_predictive", 
-                                "To predict who is going to donate again.", 
-                                placement = "bottom", 
-                                trigger = "hover",
-                                options = NULL),
-                      align = "center"
-                    )
-                  ),
-                  column(2)
-                ),
+                mod_home_ui("home_1",
+                            "View the descriptive statistics of the data.",
+                            "To predict who is going to donate again."),
+                # column(12,
+                #        img(src = "www/logo.png"),
+                #        align = "center"),
+                # fluidRow(
+                #   column(2),
+                #   column(8,
+                #          valueBox("Wellcome to AI-enabled DSS to analyse donnors behaviour",
+                #                   subtitle = "",
+                #                   width = 12,
+                #                   color = "orange"),
+                #          align = "center"),
+                #   column(2)
+                # ),
+                # 
+                # fluidRow(
+                #   column(2),
+                #   column(
+                #     4,
+                #     div(
+                #       id = "div_des",
+                #       valueBoxOutput("click_descriptive", width = 12),
+                #       bsTooltip("click_descriptive",  
+                #                 "View the descriptive statistics of the data.", 
+                #                 placement = "bottom", 
+                #                 trigger = "hover",
+                #                 options = NULL),
+                #       align = "center"
+                #     ),
+                #     
+                #   ),
+                #   
+                #   column(
+                #     4,
+                #     div(
+                #       id = "div_pred",
+                #       valueBoxOutput("click_predictive", width = 12),
+                #       bsTooltip("click_predictive", 
+                #                 "To predict who is going to donate again.", 
+                #                 placement = "bottom", 
+                #                 trigger = "hover",
+                #                 options = NULL),
+                #       align = "center"
+                #     )
+                #   ),
+                #   column(2)
+                # ),
                 
                 br(),
                 br(),
@@ -208,7 +203,7 @@ app_ui <- function(request) {
                 fluidRow(
                   box(selectizeInput("state", "Select a State",
                                      choices = states,
-                                     selected = "AK"),
+                                     selected = "AK"), 
                       height = "100px",
                       width = 4),
                   box(numericInput("age", "Type Age",
@@ -316,68 +311,69 @@ app_ui <- function(request) {
           
           ## Body content
           dashboardBody(
-            ## modify css  ----
-            # tags$head(tags$style(includeCSS("asset/custom.css"))),
-            
-            
+
             tabItems(
               
               ## home ----
               
               tabItem(
                 "home_2",
+                
+                mod_home_ui("home_2",
+                            "View the descriptive statistics of the data.",
+                            "To predict who is going to volunteer again."),
                 # a("aaa", href = "#shiny-tab-predictive", "data-toggle" = "tab"),
-                column(12,
-                       img(src = "www/logo.png"),
-                       align = "center"),
-                fluidRow(
-                  column(2),
-                  column(8,
-                         valueBox("Wellcome to AI-enabled DSS to analyse donnors behaviour",
-                                  subtitle = "",
-                                  width = 12,
-                                  color = "orange"),
-                         align = "center"),
-                  column(2)
-                ),
-                
-                
-                tags$head(tags$style(HTML(
-                  "#div_des_2 .tooltip-inner {text-align: left;}",
-                  "#div_pred_2 .tooltip-inner {text-align: left;}"
-                ))),
-                fluidRow(
-                  column(2),
-                  column(
-                    4,
-                    div(
-                      id = "div_des_2",
-                      valueBoxOutput("click_descriptive_2", width = 12),
-                      bsTooltip("click_descriptive_2",
-                                "View the descriptive statistics of the data.",
-                                placement = "bottom",
-                                trigger = "hover",
-                                options = NULL),
-                      align = "center"
-                    ),
-                    
-                  ),
-                  
-                  column(
-                    4,
-                    div(
-                      id = "div_pred_2",
-                      valueBoxOutput("click_predictive_2", width = 12),
-                      bsTooltip("click_predictive_2",
-                                "To predict who is going to volunteer again.",
-                                placement = "bottom",
-                                trigger = "hover",
-                                options = NULL),
-                      align = "center"
-                    )
-                  ),
-                  column(2)
-                )
+                # column(12,
+                #        img(src = "www/logo.png"),
+                #        align = "center"),
+                # fluidRow(
+                #   column(2),
+                #   column(8,
+                #          valueBox("Wellcome to AI-enabled DSS to analyse donnors behaviour",
+                #                   subtitle = "",
+                #                   width = 12,
+                #                   color = "orange"),
+                #          align = "center"),
+                #   column(2)
+                # ),
+                # 
+                # 
+                # tags$head(tags$style(HTML(
+                #   "#div_des_2 .tooltip-inner {text-align: left;}",
+                #   "#div_pred_2 .tooltip-inner {text-align: left;}"
+                # ))),
+                # fluidRow(
+                #   column(2),
+                #   column(
+                #     4,
+                #     div(
+                #       id = "div_des_2",
+                #       valueBoxOutput("click_descriptive_2", width = 12),
+                #       bsTooltip("click_descriptive_2",
+                #                 "View the descriptive statistics of the data.",
+                #                 placement = "bottom",
+                #                 trigger = "hover",
+                #                 options = NULL),
+                #       align = "center"
+                #     ),
+                #     
+                #   ),
+                #   
+                #   column(
+                #     4,
+                #     div(
+                #       id = "div_pred_2",
+                #       valueBoxOutput("click_predictive_2", width = 12),
+                #       bsTooltip("click_predictive_2",
+                #                 "To predict who is going to volunteer again.",
+                #                 placement = "bottom",
+                #                 trigger = "hover",
+                #                 options = NULL),
+                #       align = "center"
+                #     )
+                #   ),
+                #   column(2)
+                # )
                 
                 # br(),
                 # br(),
