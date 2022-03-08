@@ -15,7 +15,25 @@
 
 ## Dependencies ----
 ## Add one line by package you want to add as dependency
-usethis::use_package( "thinkr" )
+usethis::use_package("ggplot2")
+usethis::use_package("dplyr")
+usethis::use_package("tidyr")
+usethis::use_package("stringr")
+usethis::use_package("readr")
+usethis::use_package("broom")
+usethis::use_package("dials")
+usethis::use_package("infer")
+usethis::use_package("parsnip")
+usethis::use_package("purrr")
+usethis::use_package("recipes")
+usethis::use_package("tune")
+usethis::use_package("workflows")
+usethis::use_package("yardstick")
+usethis::use_package("glmnet")
+usethis::use_package("shinydashboard")
+usethis::use_package("shinyWidgets")
+usethis::use_package("shinyBS", "Depends")
+usethis::use_package("shinyjs")
 
 ## Add modules ----
 ## Create a module infrastructure in R/
@@ -24,14 +42,20 @@ golem::add_module( name = "name_of_module2" ) # Name of the module
 
 ## Add helper functions ----
 ## Creates fct_* and utils_*
-golem::add_fct( "helpers" ) 
-golem::add_utils( "helpers" )
+golem::add_fct("helpers") 
+# golem::add_utils( "helpers" )
 
 ## External resources
 ## Creates .js and .css files at inst/app/www
-golem::add_js_file( "script" )
-golem::add_js_handler( "handlers" )
-golem::add_css_file( "custom" )
+# golem::add_js_file( "script" )
+# golem::add_js_handler( "handlers" )
+golem::add_css_file("custom")
+
+
+# import file
+usethis::use_r("donorSupportSys")
+
+
 
 ## Add internal datasets ----
 ## If you have data in your package

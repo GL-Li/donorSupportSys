@@ -6,18 +6,39 @@ Description: Manage and analyze donor data.
 License: MIT + file LICENSE
 Imports: 
     attempt,
+    broom,
     config (>= 0.3.1),
+    dials,
+    dplyr,
     DT,
+    ggplot2,
+    glmnet,
     glue,
     golem (>= 0.3.1),
     htmltools,
+    infer,
+    parsnip,
     processx,
-    shiny (>= 1.7.1)
+    purrr,
+    readr,
+    recipes,
+    shiny (>= 1.7.1),
+    shinydashboard,
+    shinyjs,
+    shinyWidgets,
+    stringr,
+    tidyr,
+    tune,
+    workflows,
+    yardstick
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Suggests: 
     spelling,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Language: en-US
+Depends: 
+    shinyBS,
+    R (>= 2.10)

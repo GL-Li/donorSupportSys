@@ -1,0 +1,81 @@
+ 
+
+
+.main-header .logo {
+    margin-left: 0px;
+    width: 230px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.skin-blue .wrapper {
+    background-color: #ecf0f5;
+}
+
+/*
+.skin-blue .main-sidebar {
+    background-color: rgb(50, 50, 50);
+}
+*/
+ 
+          
+#donor_dashboard .main-sidebar {
+    background-color: rgb(50, 60, 50);
+}
+
+
+#volunteer_dashboard  .main-sidebar {
+    background-color: rgb(50, 50, 60);
+}
+
+
+.logo{
+    position: fixed;
+}
+.main-sidebar{
+    position: fixed;
+}
+h1{
+    margin-top: 0;
+    padding-top: 0;
+}
+.dataTables_filter {
+    display: none;
+}
+.content-wrapper{
+    background-color: rgb(255, 255, 255);
+}
+.nav-tabs{
+    font-weight: normal;
+    font-size: 25px;
+}
+.tab-content {
+    margin-top: 5px;
+}
+.container-fluid {
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 0;
+    margin-right: 0;
+}
+#wordcloud_1{
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+}
+tbody {
+    vertical-align: top;
+}
+#DataTables_Table_0_length {
+    display: none;
+}
+.go-to-top {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+}
+#file_upload_progress{
+    margin-bottom: 0;
+}
+.form-group{
+    margin-bottom: 0;
+}
