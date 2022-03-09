@@ -54,56 +54,56 @@ app_ui <- function(request) {
               
               tabItem(
                 "home",
-                # a("aaa", href = "#shiny-tab-predictive", "data-toggle" = "tab"),
-                
+
                 mod_home_ui("home_1",
                             "View the descriptive statistics of the data.",
                             "To predict who is going to donate again.")
               ),
               
-              
-              
-              
+
               ## descriptive analysis ----
+              
               tabItem(
                 "descriptive",
                 
-                selectizeInput("donor_data", "Select a dataset",
-                               choices = c("donor_data_group_1",
-                                           "donor_data_group_2"),
-                               selected = "donor_data_group_1"),
+                mod_descriptive_ui("descriptive_1")
                 
-                fluidRow(
-                  valueBoxOutput("donor_info", width = 3),
-                  valueBoxOutput("avg_dollar", width = 3),
-                  valueBoxOutput("again_donor", width = 3),
-                  valueBoxOutput("pct_again", width = 3)
-                  
-                ),
-                hr(),
-                
-                fluidRow(
-                  
-                ),
-                
-                fluidRow(
-                  plotOutput("by_state", height = plot_height),
-                ),
-                hr(),
-                
-                fluidRow(
-                  column(6, plotOutput("by_age", height = plot_height)),
-                  column(6, plotOutput("by_n_donation", height = plot_height))
-                ),
-                hr(),
-                
-                fluidRow(
-                  column(3, plotOutput("pie_gender", height = plot_height_pie)),
-                  column(3, plotOutput("pie_ses", height = plot_height_pie)),
-                  column(3, plotOutput("pie_college", height = plot_height_pie)),
-                  column(3, plotOutput("pie_income", height = plot_height_pie))
-                )
-                
+                # selectizeInput("donor_data", "Select a dataset",
+                #                choices = c("donor_data_group_1",
+                #                            "donor_data_group_2"),
+                #                selected = "donor_data_group_1"),
+                # 
+                # fluidRow(
+                #   valueBoxOutput("donor_info", width = 3),
+                #   valueBoxOutput("avg_dollar", width = 3),
+                #   valueBoxOutput("again_donor", width = 3),
+                #   valueBoxOutput("pct_again", width = 3)
+                #   
+                # ),
+                # hr(),
+                # 
+                # fluidRow(
+                #   
+                # ),
+                # 
+                # fluidRow(
+                #   plotOutput("by_state", height = plot_height),
+                # ),
+                # hr(),
+                # 
+                # fluidRow(
+                #   column(6, plotOutput("by_age", height = plot_height)),
+                #   column(6, plotOutput("by_n_donation", height = plot_height))
+                # ),
+                # hr(),
+                # 
+                # fluidRow(
+                #   column(3, plotOutput("pie_gender", height = plot_height_pie)),
+                #   column(3, plotOutput("pie_ses", height = plot_height_pie)),
+                #   column(3, plotOutput("pie_college", height = plot_height_pie)),
+                #   column(3, plotOutput("pie_income", height = plot_height_pie))
+                # )
+                # 
                 
                 # fluidRow(
                 #     column(4, plotOutput("plot_ses", height = plot_height)),
