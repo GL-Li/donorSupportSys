@@ -15,17 +15,21 @@ app_server <- function( input, output, session ) {
     
     ## descriptive analysis ====================================================
     
+    # dat_donor <- reactive({
+    #     read_csv(input$donor_data) %>%
+    #         filter(state %in% states) %>%
+    #         # mutate(ses = as.character(ses)) %>%
+    #         mutate(ses = case_when(ses == "1" ~ "high",
+    #                                ses == "2" ~ "average",
+    #                                ses == "3" ~ "low"),
+    #                college = case_when(college == 0 ~ "yes",
+    #                                    college == 1 ~ "no"),
+    #                gender = ifelse(gender == "M", "male", "female"))
+    # }) 
+    
     dat_donor <- reactive({
-        read_csv(input$donor_data) %>%
-            filter(state %in% states) %>%
-            # mutate(ses = as.character(ses)) %>%
-            mutate(ses = case_when(ses == "1" ~ "high",
-                                   ses == "2" ~ "average",
-                                   ses == "3" ~ "low"),
-                   college = case_when(college == 0 ~ "yes",
-                                       college == 1 ~ "no"),
-                   gender = ifelse(gender == "M", "male", "female"))
-    }) 
+        get(input$donor_data)
+    })
     
     ### numbers ----
     output$donor_info <- renderValueBox({
@@ -196,17 +200,21 @@ app_server <- function( input, output, session ) {
     
     ## descriptive analysis ====================================================
     
+    # dat_volunteer <- reactive({
+    #     read_csv(input$volunteer_data) %>%
+    #         filter(state %in% states) %>%
+    #         # mutate(ses = as.character(ses)) %>%
+    #         mutate(ses = case_when(ses == "1" ~ "high",
+    #                                ses == "2" ~ "average",
+    #                                ses == "3" ~ "low"),
+    #                college = case_when(college == 0 ~ "yes",
+    #                                    college == 1 ~ "no"),
+    #                gender = ifelse(gender == "M", "male", "female"))
+    # }) 
+    
     dat_volunteer <- reactive({
-        read_csv(input$volunteer_data) %>%
-            filter(state %in% states) %>%
-            # mutate(ses = as.character(ses)) %>%
-            mutate(ses = case_when(ses == "1" ~ "high",
-                                   ses == "2" ~ "average",
-                                   ses == "3" ~ "low"),
-                   college = case_when(college == 0 ~ "yes",
-                                       college == 1 ~ "no"),
-                   gender = ifelse(gender == "M", "male", "female"))
-    }) 
+        get(input$volunteer_data)
+    })
     
     ### numbers ----
     output$volunteer_info <- renderValueBox({
