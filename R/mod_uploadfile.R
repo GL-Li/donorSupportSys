@@ -21,15 +21,21 @@ mod_uploadfile_ui <- function(id, label = "Choose a file"){
     
 #' uploadfile Server Functions
 #'
+#' @param mdl model
 #' @noRd 
-mod_uploadfile_server <- function(id){
+mod_uploadfile_server <- function(id, mdl){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
     reactive({
       req(input$file_upload)
       read.csv(input$file_upload$datapath, 
-               stringsAsFactors = FALSE) 
+               stringsAsFactors = FALSE) %>%
+        bind_cols(predict(mdl, ., type = "prob")[, 2] %>%
+                    round(4)) %>%
+        bind_cols(predict(mdl, .)) %>%
+        rename(predicted_prob = .pred_1,
+               predicted_result = .pred_class)
     })
   })
 }

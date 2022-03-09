@@ -189,11 +189,7 @@ app_ui <- function(request) {
                 fluidRow(
                   column(
                     4,
-                    box(fileInput("file_upload", "Choose a file",
-                                  multiple = FALSE,
-                                  accept = c("text/csv",
-                                             "text/comma-separated-values,text/plain",
-                                             ".csv")),
+                    box(mod_uploadfile_ui("uploadfile_pred_1"),
                         width = 12),
                     box(downloadButton("download", "Download predicitons"),
                         width = 12)
@@ -375,11 +371,7 @@ app_ui <- function(request) {
                 fluidRow(
                   column(
                     4,
-                    box(fileInput("file_upload_2", "Choose a file",
-                                  multiple = FALSE,
-                                  accept = c("text/csv",
-                                             "text/comma-separated-values,text/plain",
-                                             ".csv")),
+                    box(mod_uploadfile_ui("uploadfile_pred_2"),
                         width = 12),
                     box(downloadButton("download_2", "Download predicitons"),
                         width = 12)

@@ -169,19 +169,31 @@ app_server <- function( input, output, session ) {
     
     ### batch donnor prediction ----
     
-    dat <- reactive({
-        req(input$file_upload)
-        read.csv(input$file_upload$datapath, 
-                 stringsAsFactors = FALSE) %>%
-            bind_cols(predict(mod, ., type = "prob")[, 2] %>%
-                          round(4)) %>%
-            bind_cols(predict(mod, .)) %>%
-            rename(predicted_prob = .pred_1,
-                   predicted_result = .pred_class) 
-    })
+    # dat <- reactive({
+    #   dat_uploaded <- mod_uploadfile_server("uploadfile_pred_1")
+    #   pred <- predict(mod, dat_uploaded(), type = "prob")[, 2] %>%
+    #     round(4)
+    #   
+    #   dat_uploaded() %>%
+    #     bind_cols(pred) %>%
+    #     bind_cols(predict(mod, dat_uploaded())) %>%
+    #     rename(predicted_prob = .pred_1,
+    #            predicted_result = .pred_class) 
+    # })
     
+    dat <- mod_uploadfile_server("uploadfile_pred_1", mdl = mod)
+
     output$table <- DT::renderDataTable({
-        dat()
+      # dat <- mod_uploadfile_server("uploadfile_pred_1")
+      # pred <- predict(mod, dat(), type = "prob")[, 2] %>%
+      #   round(4)
+      # 
+      # dat() %>%
+      #   bind_cols(pred) %>%
+      #   bind_cols(predict(mod, dat())) %>%
+      #   rename(predicted_prob = .pred_1,
+      #          predicted_result = .pred_class) 
+      dat()
     })
     
     output$download <- downloadHandler(
@@ -356,16 +368,7 @@ app_server <- function( input, output, session ) {
     
     ### batch donnor prediction ----
     
-    dat_2 <- reactive({
-        req(input$file_upload_2)
-        read.csv(input$file_upload_2$datapath, 
-                 stringsAsFactors = FALSE) %>%
-            bind_cols(predict(mod_2, ., type = "prob")[, 2] %>%
-                          round(4)) %>%
-            bind_cols(predict(mod_2, .)) %>%
-            rename(predicted_prob = .pred_1,
-                   predicted_result = .pred_class) 
-    })
+    dat_2 <- dat <- mod_uploadfile_server("uploadfile_pred_2", mdl = mod_2)
     
     output$table_2 <- DT::renderDataTable({
         dat_2()
