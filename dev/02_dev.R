@@ -40,6 +40,7 @@ usethis::use_package("shinyjs")
 golem::add_module( name = "home" ) # Name of the module
 golem::add_module("uploadfile")
 golem::add_module("descriptive")
+golem::add_module("descriptive_volunteer")
 
 ## Add helper functions ----
 ## Creates fct_* and utils_*

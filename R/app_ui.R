@@ -260,44 +260,44 @@ app_ui <- function(request) {
               ## descriptive analysis ----
               tabItem(
                 "descriptive_2",
-                
-                selectizeInput("volunteer_data", "Select a dataset",
-                               choices = c("volunteer_data_group_1",
-                                           "volunteer_data_group_2"),
-                               selected = "volunteer_data_group_1"),
-                
-                fluidRow(
-                  valueBoxOutput("volunteer_info", width = 3),
-                  valueBoxOutput("avg_hour", width = 3),
-                  valueBoxOutput("again_volunteer", width = 3),
-                  valueBoxOutput("pct_again_2", width = 3)
-                  
-                ),
-                hr(),
-                
-                fluidRow(
-                  
-                ),
-                
-                fluidRow(
-                  plotOutput("by_state_2", height = plot_height),
-                ),
-                
-                hr(),
-                
-                fluidRow(
-                  column(3, plotOutput("pie_gender_2", height = plot_height_pie)),
-                  column(3, plotOutput("pie_ses_2", height = plot_height_pie)),
-                  column(3, plotOutput("pie_college_2", height = plot_height_pie)),
-                  column(3, plotOutput("pie_income_2", height = plot_height_pie))
-                ),
-                
-                hr(),
-                
-                fluidRow(
-                  column(6, plotOutput("by_age_2", height = plot_height)),
-                  column(6, plotOutput("by_n_volunteer", height = plot_height))
-                )
+                mod_descriptive_volunteer_ui("descriptive_volunteer_1")
+                # selectizeInput("volunteer_data", "Select a dataset",
+                #                choices = c("volunteer_data_group_1",
+                #                            "volunteer_data_group_2"),
+                #                selected = "volunteer_data_group_1"),
+                # 
+                # fluidRow(
+                #   valueBoxOutput("volunteer_info", width = 3),
+                #   valueBoxOutput("avg_hour", width = 3),
+                #   valueBoxOutput("again_volunteer", width = 3),
+                #   valueBoxOutput("pct_again_2", width = 3)
+                #   
+                # ),
+                # hr(),
+                # 
+                # fluidRow(
+                #   
+                # ),
+                # 
+                # fluidRow(
+                #   plotOutput("by_state_2", height = plot_height),
+                # ),
+                # 
+                # hr(),
+                # 
+                # fluidRow(
+                #   column(3, plotOutput("pie_gender_2", height = plot_height_pie)),
+                #   column(3, plotOutput("pie_ses_2", height = plot_height_pie)),
+                #   column(3, plotOutput("pie_college_2", height = plot_height_pie)),
+                #   column(3, plotOutput("pie_income_2", height = plot_height_pie))
+                # ),
+                # 
+                # hr(),
+                # 
+                # fluidRow(
+                #   column(6, plotOutput("by_age_2", height = plot_height)),
+                #   column(6, plotOutput("by_n_volunteer", height = plot_height))
+                # )
               ),
               
               

@@ -200,6 +200,8 @@ app_server <- function( input, output, session ) {
   
   ## descriptive analysis ====================================================
   
+  mod_descriptive_volunteer_server("descriptive_volunteer_1")
+  
   # dat_volunteer <- reactive({
   #     read_csv(input$volunteer_data) %>%
   #         filter(state %in% states) %>%
@@ -212,76 +214,74 @@ app_server <- function( input, output, session ) {
   #                gender = ifelse(gender == "M", "male", "female"))
   # }) 
   
-  dat_volunteer <- reactive({
-    get(input$volunteer_data)
-  })
-  
-  ### numbers ----
-  output$volunteer_info <- renderValueBox({
-    n_volunteers <- nrow(dat_volunteer())
-    
-    valueBox(value = n_volunteers,
-             subtitle = "Number of Volunteers")
-  })
-  
-  output$again_volunteer <- renderValueBox({
-    n_again <- sum(dat_volunteer()$volunteered_within_last_year)
-    
-    valueBox(value = n_again,
-             subtitle = "Number of Volunteers Volunteered Again Last Year")
-  })
-  
-  output$pct_again_2 <- renderValueBox({
-    prob_again <- round(100 * mean(dat_volunteer()$volunteered_within_last_year), 2)
-    
-    valueBox(value = paste0(prob_again, "%"),
-             subtitle = "Percent of Volunteers Volunteered Again Last Year")
-  })
-  
-  
-  output$avg_hour <- renderValueBox({
-    avg <- mean(dat_volunteer()$total_hour)
-    print("===========+++++++++++=========")
-    print(head(dat_donor()))
-    
-    valueBox(value = paste0(round(avg, 2), " hours"),
-             subtitle = "Average Volunteering Hour by a Volunteer")
-  })
-  
-  
-  ### numbers of donors ----
-  output$by_state_2 <- renderPlot({
-    plot_state(.data = dat_volunteer(), ylab = "Number of Volunteers")
-  })
-  
-  output$by_age_2 <- renderPlot({
-    plot_age(.data = dat_volunteer(), ylab = "Number of Volunteers")
-  })
-  
-  output$by_n_volunteer <- renderPlot({
-    plot_n_volunteer(.data = dat_volunteer())
-  })
-  
-  output$pie_gender_2 <- renderPlot({
-    plot_pie("gender", "Gender", .data = dat_volunteer())
-  })
-  
-  
-  output$pie_ses_2 <- renderPlot({
-    plot_pie("ses", "Socioeconomic Status", .data = dat_volunteer())
-  })
-  
-  output$pie_college_2 <- renderPlot({
-    plot_pie("college", "College Degree", .data = dat_volunteer())
-  })
-  
-  # output$pie_gender <- renderPlot({
-  #     plot_pie("gender")
+  # dat_volunteer <- reactive({
+  #   get(input$volunteer_data)
   # })
-  
-  output$pie_income_2 <- renderPlot({
-    plot_pie("income", "Income Level", .data = dat_volunteer())
-  })
+  # 
+  # ### numbers ----
+  # output$volunteer_info <- renderValueBox({
+  #   n_volunteers <- nrow(dat_volunteer())
+  #   
+  #   valueBox(value = n_volunteers,
+  #            subtitle = "Number of Volunteers")
+  # })
+  # 
+  # output$again_volunteer <- renderValueBox({
+  #   n_again <- sum(dat_volunteer()$volunteered_within_last_year)
+  #   
+  #   valueBox(value = n_again,
+  #            subtitle = "Number of Volunteers Volunteered Again Last Year")
+  # })
+  # 
+  # output$pct_again_2 <- renderValueBox({
+  #   prob_again <- round(100 * mean(dat_volunteer()$volunteered_within_last_year), 2)
+  #   
+  #   valueBox(value = paste0(prob_again, "%"),
+  #            subtitle = "Percent of Volunteers Volunteered Again Last Year")
+  # })
+  # 
+  # 
+  # output$avg_hour <- renderValueBox({
+  #   avg <- mean(dat_volunteer()$total_hour)
+  #   
+  #   valueBox(value = paste0(round(avg, 2), " hours"),
+  #            subtitle = "Average Volunteering Hour by a Volunteer")
+  # })
+  # 
+  # 
+  # ### numbers of donors ----
+  # output$by_state_2 <- renderPlot({
+  #   plot_state(.data = dat_volunteer(), ylab = "Number of Volunteers")
+  # })
+  # 
+  # output$by_age_2 <- renderPlot({
+  #   plot_age(.data = dat_volunteer(), ylab = "Number of Volunteers")
+  # })
+  # 
+  # output$by_n_volunteer <- renderPlot({
+  #   plot_n_volunteer(.data = dat_volunteer())
+  # })
+  # 
+  # output$pie_gender_2 <- renderPlot({
+  #   plot_pie("gender", "Gender", .data = dat_volunteer())
+  # })
+  # 
+  # 
+  # output$pie_ses_2 <- renderPlot({
+  #   plot_pie("ses", "Socioeconomic Status", .data = dat_volunteer())
+  # })
+  # 
+  # output$pie_college_2 <- renderPlot({
+  #   plot_pie("college", "College Degree", .data = dat_volunteer())
+  # })
+  # 
+  # # output$pie_gender <- renderPlot({
+  # #     plot_pie("gender")
+  # # })
+  # 
+  # output$pie_income_2 <- renderPlot({
+  #   plot_pie("income", "Income Level", .data = dat_volunteer())
+  # })
   
   
   ### percent volunteered again ----
@@ -312,7 +312,7 @@ app_server <- function( input, output, session ) {
   # })
   # 
   # output$plot_n_donations <- renderPlot({
-  #     plot_binary(n_donation, x_type = "continuous", .data = dat_donor()) +
+  #     plot_binary(n_donation, x_type = "continuous", .data = dat_volunteer()) +
   #         labs(x = "Number of Past Donations Bracket")
   # })
   
