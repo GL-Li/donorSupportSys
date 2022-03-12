@@ -157,37 +157,18 @@ app_server <- function( input, output, session ) {
   
   ### batch donnor prediction ----
   
-  # dat <- reactive({
-  #   dat_uploaded <- mod_uploadfile_server("uploadfile_pred_1")
-  #   pred <- predict(mod, dat_uploaded(), type = "prob")[, 2] %>%
-  #     round(4)
-  #   
-  #   dat_uploaded() %>%
-  #     bind_cols(pred) %>%
-  #     bind_cols(predict(mod, dat_uploaded())) %>%
-  #     rename(predicted_prob = .pred_1,
-  #            predicted_result = .pred_class) 
-  # })
+
   
-  dat <- mod_uploadfile_server("uploadfile_pred_1", mdl = mod)
+  dat_0 <- mod_uploadfile_server("uploadfile_pred_1", mdl = mod)
   
   output$table <- DT::renderDataTable({
-    # dat <- mod_uploadfile_server("uploadfile_pred_1")
-    # pred <- predict(mod, dat(), type = "prob")[, 2] %>%
-    #   round(4)
-    # 
-    # dat() %>%
-    #   bind_cols(pred) %>%
-    #   bind_cols(predict(mod, dat())) %>%
-    #   rename(predicted_prob = .pred_1,
-    #          predicted_result = .pred_class) 
-    dat()
+    dat_0()
   })
   
   output$download <- downloadHandler(
     filename = function() {"prediction.csv"},
     content = function(file) {
-      write.csv(dat(), file, row.names = FALSE)
+      write.csv(dat_0(), file, row.names = FALSE)
     }
   )
   
