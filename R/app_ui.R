@@ -82,6 +82,24 @@ app_ui <- function(request) {
                            color = "blue")
                 ),
                 
+                
+                ### batch of donors ----
+                h1("Predict for a batch of donors"),
+                fluidRow(
+                  column(
+                    4,
+                    box(mod_uploadfile_ui("uploadfile_pred_1"),
+                        width = 12),
+                    box(downloadButton("download", "Download predicitons"),
+                        width = 12)
+                  ),
+                  column(
+                    8,
+                    DT::dataTableOutput("table")
+                  )
+                ),
+                
+                
                 ### single donor ----
                 
                 h1("Predict for a single donor"),
@@ -95,17 +113,18 @@ app_ui <- function(request) {
                                      selected = "AK"), 
                       height = "100px",
                       width = 4),
-                  box(numericInput("age", "Type Age",
+                  box(sliderInput("age", "Select Age",
                                    value = 50,
                                    min = 0,
                                    max = 100,
                                    step = 1),
                       height = "100px",
                       width = 4),
-                  box(numericInput("n_donation", 
-                                   "Type Number of Previous Donations",
+                  box(sliderInput("n_donation", 
+                                   "Select Number of Previous Donations",
                                    value = 3,
                                    min = 0,
+                                  max =100,
                                    step = 1),
                       width = 4,
                       height = "100px")
@@ -135,24 +154,9 @@ app_ui <- function(request) {
                                    selected = "Yes",
                                    inline = TRUE),
                       width = 6)
-                ),
-                
-                ### batch of donors ----
-                h1("Predict for a batch of donors"),
-                fluidRow(
-                  column(
-                    4,
-                    box(mod_uploadfile_ui("uploadfile_pred_1"),
-                        width = 12),
-                    box(downloadButton("download", "Download predicitons"),
-                        width = 12)
-                  ),
-                  column(
-                    8,
-                    DT::dataTableOutput("table")
-                  )
-                  
                 )
+                
+                
               ),
               
               ## Predictive visualization ----
@@ -256,6 +260,25 @@ app_ui <- function(request) {
                            color = "blue")
                 ),
                 
+                
+                ### batch of donors ----
+                h1("Predict for a batch of volunteers"),
+                fluidRow(
+                  column(
+                    4,
+                    box(mod_uploadfile_ui("uploadfile_pred_2"),
+                        width = 12),
+                    box(downloadButton("download_2", "Download predicitons"),
+                        width = 12)
+                  ),
+                  column(
+                    8,
+                    DT::dataTableOutput("table_2")
+                  )
+                  
+                ),
+                
+                
                 ### single donor ----
                 
                 h1("Predict for a single volunteer"),
@@ -269,17 +292,18 @@ app_ui <- function(request) {
                                      selected = "AK"),
                       height = "100px",
                       width = 4),
-                  box(numericInput("age_2", "Type Age",
+                  box(sliderInput("age_2", "Select Age",
                                    value = 50,
                                    min = 0,
                                    max = 100,
                                    step = 1),
                       height = "100px",
                       width = 4),
-                  box(numericInput("n_volunteer", 
-                                   "Type Times of Previous Volunteerings",
+                  box(sliderInput("n_volunteer", 
+                                   "Select Times of Previous Volunteerings",
                                    value = 3,
                                    min = 0,
+                                  max = 100,
                                    step = 1),
                       width = 4,
                       height = "100px")
@@ -309,24 +333,9 @@ app_ui <- function(request) {
                                    selected = "Yes",
                                    inline = TRUE),
                       width = 6)
-                ),
-                
-                ### batch of donors ----
-                h1("Predict for a batch of volunteers"),
-                fluidRow(
-                  column(
-                    4,
-                    box(mod_uploadfile_ui("uploadfile_pred_2"),
-                        width = 12),
-                    box(downloadButton("download_2", "Download predicitons"),
-                        width = 12)
-                  ),
-                  column(
-                    8,
-                    DT::dataTableOutput("table_2")
-                  )
-                  
                 )
+                
+              
               ),
               
               
