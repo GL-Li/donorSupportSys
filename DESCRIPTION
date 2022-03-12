@@ -29,7 +29,6 @@ Imports:
     stringr,
     tidyr,
     tune,
-    workflows,
     yardstick
 Encoding: UTF-8
 LazyData: true
@@ -41,4 +40,5 @@ Config/testthat/edition: 3
 Language: en-US
 Depends: 
     shinyBS,
-    R (>= 2.10)
+    R (>= 2.10),
+    workflows
