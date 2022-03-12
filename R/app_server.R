@@ -304,6 +304,57 @@ app_server <- function( input, output, session ) {
   
   
   
+  ## predictive visualization ----
+  # mod_visualization_server("visualization_1", mod)
+  
+  dat2 <- mod_upload_file_general_server("upload_file_general_2")
+  
+  output$state_prob_2 <- renderPlot({
+    plot_pred_bar(mod_2, dat2(), "state") +
+      labs(x = NULL)
+  })
+  
+  output$age_prob_2 <- renderPlot({
+    plot_pred_bar(mod_2, dat2(), "age") +
+      labs(x = "Age")
+  })
+  
+  output$n_donation_prob_2 <- renderPlot({
+    plot_pred_bar(mod_2, dat2(), "n_volunteering") +
+      scale_x_continuous(limits = c(1, 70)) +
+      labs(x = "Number of Previous Volunteering")
+  })
+  
+  output$ses_prob_2 <- renderPlot({
+    plot_pred_bar(mod_2, dat2(), "ses") +
+      scale_x_continuous(breaks = 1:3, 
+                         labels = c("High", "Average", "Low")) +
+      labs(x = "Socioeconomic Status")
+  })
+  
+  output$income_prob_2 <- renderPlot({
+    plot_pred_bar(mod_2, dat2(), "income") +
+      scale_x_continuous(breaks = 1:7) +
+      labs(x = "Income Group")
+  })
+  
+  output$gender_prob_2 <- renderPlot({
+    plot_pred_bar(mod_2, dat2(), "gender") +
+      scale_x_discrete(breaks = c("M", "F"), 
+                       labels = c("Male", "Female")) +
+      labs(x = "Gender")
+  })
+  
+  output$college_prob_2 <- renderPlot({
+    plot_pred_bar(mod_2, dat2(), "college") +
+      scale_x_continuous(breaks = 0:1, 
+                         labels = c("No College", "College or Above")) +
+      labs(x = "Education")
+  })
+  
+  
+  
+  
   
   # switch between donor and volunteer ======================================
   

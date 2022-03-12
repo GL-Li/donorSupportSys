@@ -210,7 +210,10 @@ app_ui <- function(request) {
                        icon = icon("chart-bar")),
               menuItem("Predictive analysis",
                        tabName = "predictive_2",
-                       icon = icon("brain"))
+                       icon = icon("brain")),
+              menuItem("Predictive visualization",
+                       tabName = "visualization_2",
+                       icon =icon("chart-bar"))
             ),
             
             br(),
@@ -324,7 +327,40 @@ app_ui <- function(request) {
                   )
                   
                 )
+              ),
+              
+              
+              ## Predictive visualization ----
+              
+              tabItem(
+                tabName = "visualization_2",
+                # mod_visualization_ui("visualization_1")
+                mod_upload_file_general_ui("upload_file_general_2"),
+                
+                fluidRow(
+                  plotOutput("state_prob_2", height = plot_height),
+                  column(6, plotOutput("age_prob_2", height = plot_height)),
+                  column(6, plotOutput("n_donation_prob_2", height = plot_height))
+                ),
+                
+                fluidRow(
+                  column(6, plotOutput("ses_prob_2", height = plot_height)),
+                  column(6, plotOutput("income_prob_2", height = plot_height))
+                ),
+                
+                fluidRow(
+                  column(6, plotOutput("gender_prob_2", height = plot_height)),
+                  column(6, plotOutput("college_prob_2", height = plot_height))
+                )
+                
               )
+              
+              
+              
+              
+              
+              
+              
               
               
             )

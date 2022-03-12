@@ -144,7 +144,7 @@ plot_pred_bar <- function(mdl, .data, col) {
         bind_cols(pred_prob) %>%
         filter(state %in% states)
     
-    if (col %in% c("age", "n_donation")) {
+    if (col %in% c("age", "n_donation", "n_volunteering")) {
         g <- dat_pred %>%
             group_by(across(col)) %>%
             summarise(`Predicted Probability` = mean(.pred_1),
