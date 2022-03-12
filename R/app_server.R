@@ -192,6 +192,54 @@ app_server <- function( input, output, session ) {
   )
   
   
+  ## predictive visualization ----
+  # mod_visualization_server("visualization_1", mod)
+  
+  dat1 <- mod_upload_file_general_server("upload_file_general_1")
+  
+  output$state_prob <- renderPlot({
+    plot_pred_bar(mod, dat1(), "state") +
+      labs(x = NULL)
+  })
+  
+  output$age_prob <- renderPlot({
+    plot_pred_bar(mod, dat1(), "age") +
+      labs(x = "Age")
+  })
+  
+  output$n_donation_prob <- renderPlot({
+    plot_pred_bar(mod, dat1(), "n_donation") +
+      scale_x_continuous(limits = c(1, 70)) +
+      labs(x = "Number of Previous Donations")
+  })
+  
+  output$ses_prob <- renderPlot({
+    plot_pred_bar(mod, dat1(), "ses") +
+      scale_x_continuous(breaks = 1:3, 
+                         labels = c("High", "Average", "Low")) +
+      labs(x = "Socioeconomic Status")
+  })
+  
+  output$income_prob <- renderPlot({
+    plot_pred_bar(mod, dat1(), "income") +
+      scale_x_continuous(breaks = 1:7) +
+      labs(x = "Income Group")
+  })
+  
+  output$gender_prob <- renderPlot({
+    plot_pred_bar(mod, dat1(), "gender") +
+      scale_x_discrete(breaks = c("M", "F"), 
+                       labels = c("Male", "Female")) +
+      labs(x = "Gender")
+  })
+  
+  output$college_prob <- renderPlot({
+    plot_pred_bar(mod, dat1(), "college") +
+      scale_x_continuous(breaks = 0:1, 
+                         labels = c("No College", "College or Above")) +
+      labs(x = "Education")
+  })
+  
   # volunteer ===============================================================
   
   ## home ----
@@ -201,121 +249,6 @@ app_server <- function( input, output, session ) {
   ## descriptive analysis ====================================================
   
   mod_descriptive_volunteer_server("descriptive_volunteer_1")
-  
-  # dat_volunteer <- reactive({
-  #     read_csv(input$volunteer_data) %>%
-  #         filter(state %in% states) %>%
-  #         # mutate(ses = as.character(ses)) %>%
-  #         mutate(ses = case_when(ses == "1" ~ "high",
-  #                                ses == "2" ~ "average",
-  #                                ses == "3" ~ "low"),
-  #                college = case_when(college == 0 ~ "yes",
-  #                                    college == 1 ~ "no"),
-  #                gender = ifelse(gender == "M", "male", "female"))
-  # }) 
-  
-  # dat_volunteer <- reactive({
-  #   get(input$volunteer_data)
-  # })
-  # 
-  # ### numbers ----
-  # output$volunteer_info <- renderValueBox({
-  #   n_volunteers <- nrow(dat_volunteer())
-  #   
-  #   valueBox(value = n_volunteers,
-  #            subtitle = "Number of Volunteers")
-  # })
-  # 
-  # output$again_volunteer <- renderValueBox({
-  #   n_again <- sum(dat_volunteer()$volunteered_within_last_year)
-  #   
-  #   valueBox(value = n_again,
-  #            subtitle = "Number of Volunteers Volunteered Again Last Year")
-  # })
-  # 
-  # output$pct_again_2 <- renderValueBox({
-  #   prob_again <- round(100 * mean(dat_volunteer()$volunteered_within_last_year), 2)
-  #   
-  #   valueBox(value = paste0(prob_again, "%"),
-  #            subtitle = "Percent of Volunteers Volunteered Again Last Year")
-  # })
-  # 
-  # 
-  # output$avg_hour <- renderValueBox({
-  #   avg <- mean(dat_volunteer()$total_hour)
-  #   
-  #   valueBox(value = paste0(round(avg, 2), " hours"),
-  #            subtitle = "Average Volunteering Hour by a Volunteer")
-  # })
-  # 
-  # 
-  # ### numbers of donors ----
-  # output$by_state_2 <- renderPlot({
-  #   plot_state(.data = dat_volunteer(), ylab = "Number of Volunteers")
-  # })
-  # 
-  # output$by_age_2 <- renderPlot({
-  #   plot_age(.data = dat_volunteer(), ylab = "Number of Volunteers")
-  # })
-  # 
-  # output$by_n_volunteer <- renderPlot({
-  #   plot_n_volunteer(.data = dat_volunteer())
-  # })
-  # 
-  # output$pie_gender_2 <- renderPlot({
-  #   plot_pie("gender", "Gender", .data = dat_volunteer())
-  # })
-  # 
-  # 
-  # output$pie_ses_2 <- renderPlot({
-  #   plot_pie("ses", "Socioeconomic Status", .data = dat_volunteer())
-  # })
-  # 
-  # output$pie_college_2 <- renderPlot({
-  #   plot_pie("college", "College Degree", .data = dat_volunteer())
-  # })
-  # 
-  # # output$pie_gender <- renderPlot({
-  # #     plot_pie("gender")
-  # # })
-  # 
-  # output$pie_income_2 <- renderPlot({
-  #   plot_pie("income", "Income Level", .data = dat_volunteer())
-  # })
-  
-  
-  ### percent volunteered again ----
-  
-  # output$plot_ses_2 <- renderPlot({
-  #     plot_binary(ses, .data = dat_volunteer()) +
-  #         labs(x = "Socioeconomic Status")
-  # })
-  # 
-  # output$plot_gender_2 <- renderPlot({
-  #     plot_binary(gender, .data = dat_volunteer()) +
-  #         labs(x = "Gender")
-  # })
-  # 
-  # output$plot_college_2 <- renderPlot({
-  #     plot_binary(college, .data = dat_volunteer()) +
-  #         labs(x = "College Degree")
-  # })
-  # 
-  # output$plot_income_2 <- renderPlot({
-  #     plot_binary(income, .data = dat_volunteer()) +
-  #         labs(x = "Income Bracket")
-  # })
-  # 
-  # output$plot_age_2 <- renderPlot({
-  #     plot_binary(age, x_type = "continuous", .data = dat_volunteer()) +
-  #         labs(x = "Age Bracket")
-  # })
-  # 
-  # output$plot_n_donations <- renderPlot({
-  #     plot_binary(n_donation, x_type = "continuous", .data = dat_volunteer()) +
-  #         labs(x = "Number of Past Donations Bracket")
-  # })
-  
   
   
   ## predictive analysis =====================================================

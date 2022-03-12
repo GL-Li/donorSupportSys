@@ -1,24 +1,6 @@
-# mod <- function(){
-#     readRDS("lgr_mod.RDS")
-# } 
-# mod_2 <- function(){
-#     readRDS("lgr_mod_volunteer.RDS")
-# } 
-# 
-# states <- function(){
-#     c("AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", 
-#       "GA", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA", "MA", "MD", 
-#       "ME", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", 
-#       "NM", "NV", "NY", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", 
-#       "TX", "UT", "VA", "VT", "WA", "WI", "WV", "WY")
-# } 
+# plot data ===================================================================
 
-# dat_donor <- read_csv("dat_model.csv") %>%
-#     filter(state %in% states)
-# 
-# plot_height = "200px"
-# plot_height_pie = "300px"
-
+# percent donated again from the data. Not used in Shiny app
 plot_binary <- function(x, 
                         y = donated_within_last_year, 
                         .data = dat_donor,
@@ -57,6 +39,8 @@ plot_binary <- function(x,
         theme_bw()
 }
 
+
+# pie plot
 plot_pie <- function(y, title = "", .data = dat_donor){
     .data %>%
         count(get(y)) %>%
@@ -132,4 +116,51 @@ plot_n_volunteer <- function(.data = dat_volunteer){
         theme_bw() +
         labs(x = "Times of Volunteering",
              y = "Number of Volunteers")
+}
+
+
+
+# predictive visualization ====================================================
+# Given a dataframe of donor attribute, predicted the total number of people 
+# going to donate and the percentage of total and by age, ses, ...
+
+# dat = read_csv("data-raw/donor_data_group_1.csv")
+# pred_class <- predict(mod, dat, type = "class") 
+# pred_prob <- predict(mod, dat, type = "prob")[,2]
+# dat_pred <- bind_cols(dat, pred_class) %>%
+#     bind_cols(pred_prob)
+# 
+# dat_pred %>%
+#     group_by(across("ses")) %>%
+#     summarise(avg = mean(.pred_1)) %>%
+#     ggplot(aes(ses, avg)) +
+#     geom_col()
+
+
+plot_pred_bar <- function(mdl, .data, col) {
+    pred_class <- predict(mdl, .data, type = "class") 
+    pred_prob <- predict(mdl, .data, type = "prob")[,2]
+    dat_pred <- bind_cols(.data, pred_class) %>%
+        bind_cols(pred_prob) %>%
+        filter(state %in% states)
+    
+    if (col %in% c("age", "n_donation")) {
+        g <- dat_pred %>%
+            group_by(across(col)) %>%
+            summarise(`Predicted Probability` = mean(.pred_1),
+                      n = n()) %>%
+            ggplot(aes(get(col), `Predicted Probability`)) +
+            geom_line(alpha = 0.3) +
+            geom_point(aes(size = n)) +
+            scale_size_area(max_size = 3) +
+            theme_bw()
+    } else (
+        g <- dat_pred %>%
+            group_by(across(col)) %>%
+            summarise(`Predicted Probability` = mean(.pred_1)) %>%
+            ggplot(aes(get(col), `Predicted Probability`)) +
+            geom_col() +
+            theme_bw()
+    )
+    return(g)
 }

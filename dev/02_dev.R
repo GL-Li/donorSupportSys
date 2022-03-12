@@ -39,8 +39,10 @@ usethis::use_package("shinyjs")
 ## Create a module infrastructure in R/
 golem::add_module( name = "home" ) # Name of the module
 golem::add_module("uploadfile")
+golem::add_module("upload_file_general")
 golem::add_module("descriptive")
 golem::add_module("descriptive_volunteer")
+golem::add_module("visualization")
 
 ## Add helper functions ----
 ## Creates fct_* and utils_*

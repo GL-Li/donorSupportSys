@@ -35,7 +35,10 @@ app_ui <- function(request) {
                        icon = icon("chart-bar")),
               menuItem("Predictive analysis",
                        tabName = "predictive",
-                       icon = icon("brain"))
+                       icon = icon("brain")),
+              menuItem("Predictive visualization",
+                       tabName = "visualization",
+                       icon =icon("chart-bar"))
             ),
             
             br(),
@@ -53,7 +56,7 @@ app_ui <- function(request) {
               ## home ----
               
               tabItem(
-                "home",
+                tabName = "home",
 
                 mod_home_ui("home_1",
                             "View the descriptive statistics of the data.",
@@ -64,64 +67,14 @@ app_ui <- function(request) {
               ## descriptive analysis ----
               
               tabItem(
-                "descriptive",
+                tabName = "descriptive",
                 
                 mod_descriptive_ui("descriptive_1")
-                
-                # selectizeInput("donor_data", "Select a dataset",
-                #                choices = c("donor_data_group_1",
-                #                            "donor_data_group_2"),
-                #                selected = "donor_data_group_1"),
-                # 
-                # fluidRow(
-                #   valueBoxOutput("donor_info", width = 3),
-                #   valueBoxOutput("avg_dollar", width = 3),
-                #   valueBoxOutput("again_donor", width = 3),
-                #   valueBoxOutput("pct_again", width = 3)
-                #   
-                # ),
-                # hr(),
-                # 
-                # fluidRow(
-                #   
-                # ),
-                # 
-                # fluidRow(
-                #   plotOutput("by_state", height = plot_height),
-                # ),
-                # hr(),
-                # 
-                # fluidRow(
-                #   column(6, plotOutput("by_age", height = plot_height)),
-                #   column(6, plotOutput("by_n_donation", height = plot_height))
-                # ),
-                # hr(),
-                # 
-                # fluidRow(
-                #   column(3, plotOutput("pie_gender", height = plot_height_pie)),
-                #   column(3, plotOutput("pie_ses", height = plot_height_pie)),
-                #   column(3, plotOutput("pie_college", height = plot_height_pie)),
-                #   column(3, plotOutput("pie_income", height = plot_height_pie))
-                # )
-                # 
-                
-                # fluidRow(
-                #     column(4, plotOutput("plot_ses", height = plot_height)),
-                #     column(4, plotOutput("plot_gender", height = plot_height)),
-                #     column(4, plotOutput("plot_college", height = plot_height))
-                # ),
-                # hr(), 
-                # 
-                # fluidRow(
-                #     column(4, plotOutput("plot_income", height = plot_height)),
-                #     column(4, plotOutput("plot_age", height = plot_height)),
-                #     column(4, plotOutput("plot_n_donations", height = plot_height))
-                # )
               ),
               
               ## predictive analysis ----
               tabItem(
-                "predictive",
+                tabName = "predictive",
                 fluidRow(
                   valueBox(value = "Donation Decision Support System",
                            subtitle = "Is the donnor going to donate again?",
@@ -200,7 +153,33 @@ app_ui <- function(request) {
                   )
                   
                 )
+              ),
+              
+              ## Predictive visualization ----
+              
+              tabItem(
+                tabName = "visualization",
+                # mod_visualization_ui("visualization_1")
+                mod_upload_file_general_ui("upload_file_general_1"),
+                
+                fluidRow(
+                  plotOutput("state_prob", height = plot_height),
+                  column(6, plotOutput("age_prob", height = plot_height)),
+                  column(6, plotOutput("n_donation_prob", height = plot_height))
+                ),
+                
+                fluidRow(
+                  column(6, plotOutput("ses_prob", height = plot_height)),
+                  column(6, plotOutput("income_prob", height = plot_height))
+                ),
+                
+                fluidRow(
+                  column(6, plotOutput("gender_prob", height = plot_height)),
+                  column(6, plotOutput("college_prob", height = plot_height))
+                )
+                
               )
+              
             )
           )
         )
@@ -249,7 +228,7 @@ app_ui <- function(request) {
               ## home ----
               
               tabItem(
-                "home_2",
+                tabName = "home_2",
                 
                 mod_home_ui("home_2",
                             "View the descriptive statistics of the data.",
@@ -259,51 +238,14 @@ app_ui <- function(request) {
               
               ## descriptive analysis ----
               tabItem(
-                "descriptive_2",
+                tabName = "descriptive_2",
                 mod_descriptive_volunteer_ui("descriptive_volunteer_1")
-                # selectizeInput("volunteer_data", "Select a dataset",
-                #                choices = c("volunteer_data_group_1",
-                #                            "volunteer_data_group_2"),
-                #                selected = "volunteer_data_group_1"),
-                # 
-                # fluidRow(
-                #   valueBoxOutput("volunteer_info", width = 3),
-                #   valueBoxOutput("avg_hour", width = 3),
-                #   valueBoxOutput("again_volunteer", width = 3),
-                #   valueBoxOutput("pct_again_2", width = 3)
-                #   
-                # ),
-                # hr(),
-                # 
-                # fluidRow(
-                #   
-                # ),
-                # 
-                # fluidRow(
-                #   plotOutput("by_state_2", height = plot_height),
-                # ),
-                # 
-                # hr(),
-                # 
-                # fluidRow(
-                #   column(3, plotOutput("pie_gender_2", height = plot_height_pie)),
-                #   column(3, plotOutput("pie_ses_2", height = plot_height_pie)),
-                #   column(3, plotOutput("pie_college_2", height = plot_height_pie)),
-                #   column(3, plotOutput("pie_income_2", height = plot_height_pie))
-                # ),
-                # 
-                # hr(),
-                # 
-                # fluidRow(
-                #   column(6, plotOutput("by_age_2", height = plot_height)),
-                #   column(6, plotOutput("by_n_volunteer", height = plot_height))
-                # )
               ),
               
               
               ## predictive analysis ----
               tabItem(
-                "predictive_2",
+                tabName = "predictive_2",
                 fluidRow(
                   valueBox(value = "Donation Decision Support System",
                            subtitle = "Is the volunteer going to volunteer again?",
