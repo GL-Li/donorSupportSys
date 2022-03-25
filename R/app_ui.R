@@ -27,7 +27,7 @@ app_ui <- function(request) {
           dashboardSidebar(
             sidebarMenu(
               id = "tabs",
-              menuItem("Donor Home",
+              menuItem("Donor Analysis",
                        tabName = "home",
                        icon = icon("home")),
               menuItem("Descriptive analysis",
@@ -206,7 +206,7 @@ app_ui <- function(request) {
             # sidebarMenuOutput("sidebar_menu_2")
             sidebarMenu(
               id = "tabs_2",
-              menuItem("Volunteer Home",
+              menuItem("Volunteer Analysis",
                        tabName = "home_2",
                        icon = icon("home")),
               menuItem("Descriptive analysis",
