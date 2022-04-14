@@ -128,7 +128,15 @@ mod_descriptive_volunteer_server <- function(id){
     # })
     
     output$pie_income_2 <- renderPlot({
-      plot_pie("income", "Income Level", .data = dat_volunteer())
+      plot_pie("income", "Income Level", 
+               .data = dat_volunteer() %>% mutate(income = case_when(
+                   income == 1 ~ "< $10000",
+                   income == 2 ~ "$10000 - 20000",
+                   income == 3 ~ "$20000 - 40000",
+                   income == 4 ~ "$40000 - 70000",
+                   income == 5 ~ "$70000 - 100000",
+                   income == 6 ~ "$100000 - 150000",
+                   income == 7 ~ "> $150000")))
     })
     
     ### leaflet map ----
