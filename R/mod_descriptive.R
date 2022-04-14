@@ -8,6 +8,7 @@
 #'
 #' @importFrom shiny NS tagList 
 mod_descriptive_ui <- function(id){
+  plot_height_pie = "500px"
   ns <- NS(id)
   tagList(
     selectizeInput(ns("donor_data"), "Select a dataset",
@@ -29,7 +30,9 @@ mod_descriptive_ui <- function(id){
     ),
     
     fluidRow(
-      plotOutput(ns("by_state"), height = plot_height),
+      # plotOutput(ns("by_state"), height = plot_height),
+      leafletOutput(ns("map"), height = "600px")
+      
     ),
     hr(),
     
@@ -40,10 +43,14 @@ mod_descriptive_ui <- function(id){
     hr(),
     
     fluidRow(
-      column(3, plotOutput(ns("pie_gender"), height = plot_height_pie)),
-      column(3, plotOutput(ns("pie_ses"), height = plot_height_pie)),
-      column(3, plotOutput(ns("pie_college"), height = plot_height_pie)),
-      column(3, plotOutput(ns("pie_income"), height = plot_height_pie))
+      column(6, plotOutput(ns("pie_gender"), height = plot_height_pie)),
+      column(6, plotOutput(ns("pie_ses"), height = plot_height_pie))
+      
+    ),
+    
+    fluidRow(
+      column(6, plotOutput(ns("pie_college"), height = plot_height_pie)),
+      column(6, plotOutput(ns("pie_income"), height = plot_height_pie))
     )
   )
 }
@@ -155,6 +162,14 @@ mod_descriptive_server <- function(id){
     output$plot_n_donations <- renderPlot({
       plot_binary(n_donation, x_type = "continuous", .data = dat_donor()) +
         labs(x = "Number of Past Donations Bracket")
+    })
+    
+    
+    ### leaflet map ----
+    output$map <- renderLeaflet({
+      r_colors <- rgb(t(col2rgb(colors()) / 255))
+      names(r_colors) <- colors()
+      plot_leaflet(dat_donor())
     })
     
   })

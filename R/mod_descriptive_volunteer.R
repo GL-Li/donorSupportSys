@@ -8,6 +8,7 @@
 #'
 #' @importFrom shiny NS tagList 
 mod_descriptive_volunteer_ui <- function(id){
+  plot_height_pie = "500px"
   ns <- NS(id)
   tagList(
     selectizeInput(ns("volunteer_data"), "Select a dataset",
@@ -29,23 +30,27 @@ mod_descriptive_volunteer_ui <- function(id){
     ),
     
     fluidRow(
-      plotOutput(ns("by_state_2"), height = plot_height),
+      # plotOutput(ns("by_state_2"), height = plot_height),
+      leafletOutput(ns("map"), height = "600px")
     ),
     
     hr(),
-    
-    fluidRow(
-      column(3, plotOutput(ns("pie_gender_2"), height = plot_height_pie)),
-      column(3, plotOutput(ns("pie_ses_2"), height = plot_height_pie)),
-      column(3, plotOutput(ns("pie_college_2"), height = plot_height_pie)),
-      column(3, plotOutput(ns("pie_income_2"), height = plot_height_pie))
-    ),
-    
-    hr(),
-    
+
     fluidRow(
       column(6, plotOutput(ns("by_age_2"), height = plot_height)),
       column(6, plotOutput(ns("by_n_volunteer"), height = plot_height))
+    ),
+    
+    hr(),
+    
+    fluidRow(
+      column(6, plotOutput(ns("pie_gender_2"), height = plot_height_pie)),
+      column(6, plotOutput(ns("pie_ses_2"), height = plot_height_pie))
+    ),
+    
+    fluidRow(
+      column(6, plotOutput(ns("pie_college_2"), height = plot_height_pie)),
+      column(6, plotOutput(ns("pie_income_2"), height = plot_height_pie))
     )
   )
 }
@@ -125,6 +130,14 @@ mod_descriptive_volunteer_server <- function(id){
     output$pie_income_2 <- renderPlot({
       plot_pie("income", "Income Level", .data = dat_volunteer())
     })
+    
+    ### leaflet map ----
+    output$map <- renderLeaflet({
+      r_colors <- rgb(t(col2rgb(colors()) / 255))
+      names(r_colors) <- colors()
+      plot_leaflet(dat_volunteer(), title = "Number of Volunteers")
+    })
+    
   })
 }
     

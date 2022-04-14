@@ -1,6 +1,6 @@
 ## code to prepare `my_dataset` dataset goes here
 
-# model data
+# model data ----
 
 mod <- readRDS("data-raw/lgr_mod.RDS")
 usethis::use_data(mod, overwrite = TRUE)
@@ -9,7 +9,7 @@ mod_2 <- readRDS("data-raw/lgr_mod_volunteer.RDS")
 usethis::use_data(mod_2, overwrite = TRUE)
 
 
-# values
+# values ----
 
 states <- c("AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", 
             "GA", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA", "MA", "MD", 
@@ -25,7 +25,7 @@ plot_height_pie = "300px"
 usethis::use_data(plot_height_pie)
 
 
-# sample dataset
+# sample dataset ----
 
 donor_data_group_1 <- read.csv("data-raw/donor_data_group_1.csv")
 usethis::use_data(donor_data_group_1)
@@ -39,3 +39,11 @@ usethis::use_data(volunteer_data_group_1)
 
 volunteer_data_group_2 <- read.csv("data-raw/volunteer_data_group_2.csv")
 usethis::use_data(volunteer_data_group_2)
+
+
+# sf object ----
+
+sf_state <- tigris::states(cb = TRUE, resolution = "20m") %>%
+    mutate(state_abb = STUSPS) %>%
+    select(state_abb)
+usethis::use_data(sf_state, overwrite = TRUE)

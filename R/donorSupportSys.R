@@ -11,4 +11,6 @@
 #' @import processx
 #' @import purrr
 #' @import recipes
+#' @import leaflet
+#' @import sf
 NULL

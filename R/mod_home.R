@@ -16,46 +16,54 @@ mod_home_ui <- function(id, tooltip_desc, tooltip_pred){
     fluidRow(
       column(2),
       column(8,
-             valueBox("Wellcome to AI-enabled DSS to analyse donnors behaviour",
-                      subtitle = "",
-                      width = 12,
-                      color = "orange"),
-             align = "center"),
-      column(2)
-    ),
-    
-    fluidRow(
-      column(2),
-      column(
-        4,
-        div(
-          id = ns("div_des"),
-          valueBoxOutput(ns("click_descriptive"), width = 12),
-          bsTooltip(ns("click_descriptive"),  
-                    tooltip_desc, 
-                    placement = "bottom", 
-                    trigger = "hover",
-                    options = NULL),
-          align = "center"
-        ),
-        
-      ),
-      
-      column(
-        4,
-        div(
-          id = ns("div_pred"),
-          valueBoxOutput(ns("click_predictive"), width = 12),
-          bsTooltip(ns("click_predictive"), 
-                    tooltip_pred, 
-                    placement = "bottom", 
-                    trigger = "hover",
-                    options = NULL),
-          align = "center"
-        )
-      ),
+             # valueBox("Welcome to AI-enabled DSS for analysing donor behaviour in nonprofit organisations",
+             #          subtitle = "",
+             #          width = 12,
+             #          color = "orange"),
+             
+             h1("Welcome to AI-enabled DSS for analysing donor behaviour in nonprofit organisations"),
+             
+             h2("This system is machine learning techniques based, and has two parts:"),
+             
+             h3("1. Analysing donor behaviour: descriptive and predictive analysis of donors."),
+             
+             h3("2. Analysing volunteer behaviour: descriptive and predeictive analysis of volunteers."),
+             align = "left"),
       column(2)
     )
+    
+    # fluidRow(
+    #   column(2),
+      # column(
+      #   4,
+      #   div(
+      #     id = ns("div_des"),
+      #     valueBoxOutput(ns("click_descriptive"), width = 12),
+      #     bsTooltip(ns("click_descriptive"),  
+      #               tooltip_desc, 
+      #               placement = "bottom", 
+      #               trigger = "hover",
+      #               options = NULL),
+      #     align = "center"
+      #   ),
+      #   
+      # ),
+      # 
+      # column(
+      #   4,
+      #   div(
+      #     id = ns("div_pred"),
+      #     valueBoxOutput(ns("click_predictive"), width = 12),
+      #     bsTooltip(ns("click_predictive"), 
+      #               tooltip_pred, 
+      #               placement = "bottom", 
+      #               trigger = "hover",
+      #               options = NULL),
+      #     align = "center"
+      #   )
+      # ),
+    #   column(2)
+    # )
   )
 }
     

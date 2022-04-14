@@ -82,81 +82,82 @@ app_ui <- function(request) {
                            color = "blue")
                 ),
                 
-                
-                ### batch of donors ----
-                h1("Predict for a batch of donors"),
-                fluidRow(
-                  column(
-                    4,
-                    box(mod_uploadfile_ui("uploadfile_pred_1"),
-                        width = 12),
-                    box(downloadButton("download", "Download predicitons"),
-                        width = 12)
-                  ),
-                  column(
-                    8,
-                    DT::dataTableOutput("table")
-                  )
-                ),
-                
-                
-                ### single donor ----
-                
-                h1("Predict for a single donor"),
-                fluidRow(
-                  valueBoxOutput("prediction", width = 6)
-                ),
-                
-                fluidRow(
-                  box(selectizeInput("state", "Select a State",
-                                     choices = states,
-                                     selected = "AK"), 
-                      height = "100px",
-                      width = 4),
-                  box(sliderInput("age", "Select Age",
-                                   value = 50,
-                                   min = 0,
-                                   max = 100,
-                                   step = 1),
-                      height = "100px",
-                      width = 4),
-                  box(sliderInput("n_donation", 
-                                   "Select Number of Previous Donations",
-                                   value = 3,
-                                   min = 0,
-                                  max =100,
-                                   step = 1),
-                      width = 4,
-                      height = "100px")
-                ),
-                
-                fluidRow(
-                  box(radioButtons("ses", "Select a Socioeconomic Status",
-                                   choices = 1:3,
-                                   selected = 1,
-                                   inline = TRUE)),
-                  box(radioButtons("income", "Select a Income Bracket",
-                                   choices = 1:7,
-                                   selected = 1,
-                                   inline = TRUE)),
-                  # box(radioButtons("wealth", "Select a Wealth Bracket",
-                  #                  choices = 1:7,
-                  #                  selected = 1,
-                  #                  inline = TRUE)),
+                tabsetPanel(
+                  type = "tabs",
                   
-                  box(radioButtons("gender", "Select a Gender",
-                                   choices = c("F", "M"),
-                                   selected = "F",
-                                   inline = TRUE),
-                      width = 6),
-                  box(radioButtons("edu", "College Educated?",
-                                   choices = c("Yes", "No"),
-                                   selected = "Yes",
-                                   inline = TRUE),
-                      width = 6)
+                  ### batch of donors ----
+                  
+                  tabPanel(
+                    "Predict for a batch of donors",
+                    fluidRow(
+                      column(
+                        4,
+                        box(mod_uploadfile_ui("uploadfile_pred_1"),
+                            width = 12),
+                        box(downloadButton("download", "Download predicitons"),
+                            width = 12)
+                      ),
+                      column(
+                        8,
+                        DT::dataTableOutput("table")
+                      )
+                    )
+                  ),
+                  
+                  ### single donor ----
+                  
+                  tabPanel(
+                    "Predict for a single donor",
+                    fluidRow(
+                      valueBoxOutput("prediction", width = 6)
+                    ),
+                    
+                    fluidRow(
+                      box(selectizeInput("state", "Select a State",
+                                         choices = states,
+                                         selected = "AK"), 
+                          height = "100px",
+                          width = 4),
+                      box(sliderInput("age", "Select Age",
+                                      value = 50,
+                                      min = 0,
+                                      max = 100,
+                                      step = 1),
+                          height = "100px",
+                          width = 4),
+                      box(sliderInput("n_donation", 
+                                      "Select Number of Previous Donations",
+                                      value = 3,
+                                      min = 0,
+                                      max =100,
+                                      step = 1),
+                          width = 4,
+                          height = "100px")
+                    ),
+                    
+                    fluidRow(
+                      box(radioButtons("ses", "Select a Socioeconomic Status",
+                                       choices = 1:3,
+                                       selected = 1,
+                                       inline = TRUE)),
+                      box(radioButtons("income", "Select a Income Bracket",
+                                       choices = 1:7,
+                                       selected = 1,
+                                       inline = TRUE)),
+
+                      box(radioButtons("gender", "Select a Gender",
+                                       choices = c("F", "M"),
+                                       selected = "F",
+                                       inline = TRUE),
+                          width = 6),
+                      box(radioButtons("edu", "College Educated?",
+                                       choices = c("Yes", "No"),
+                                       selected = "Yes",
+                                       inline = TRUE),
+                          width = 6)
+                    )
+                  )
                 )
-                
-                
               ),
               
               ## Predictive visualization ----
@@ -261,81 +262,80 @@ app_ui <- function(request) {
                 ),
                 
                 
-                ### batch of donors ----
-                h1("Predict for a batch of volunteers"),
-                fluidRow(
-                  column(
-                    4,
-                    box(mod_uploadfile_ui("uploadfile_pred_2"),
-                        width = 12),
-                    box(downloadButton("download_2", "Download predicitons"),
-                        width = 12)
+                tabsetPanel(
+                  type = "tabs",
+                  
+                  ### batch of donors ----
+                  tabPanel(
+                    "Predict for a batch of volunteers",
+                    fluidRow(
+                      column(
+                        4,
+                        box(mod_uploadfile_ui("uploadfile_pred_2"),
+                            width = 12),
+                        box(downloadButton("download_2", "Download predicitons"),
+                            width = 12)
+                      ),
+                      column(
+                        8,
+                        DT::dataTableOutput("table_2")
+                      )
+                    )
                   ),
-                  column(
-                    8,
-                    DT::dataTableOutput("table_2")
+                  
+                  ### single donor ----
+                  tabPanel(
+                    "Predict for a single volunteer",
+                    fluidRow(
+                      valueBoxOutput("prediction_2", width = 6)
+                    ),
+                    
+                    fluidRow(
+                      box(selectizeInput("state_2", "Select a State",
+                                         choices = states,
+                                         selected = "AK"),
+                          height = "100px",
+                          width = 4),
+                      box(sliderInput("age_2", "Select Age",
+                                      value = 50,
+                                      min = 0,
+                                      max = 100,
+                                      step = 1),
+                          height = "100px",
+                          width = 4),
+                      box(sliderInput("n_volunteer", 
+                                      "Select Times of Previous Volunteerings",
+                                      value = 3,
+                                      min = 0,
+                                      max = 100,
+                                      step = 1),
+                          width = 4,
+                          height = "100px")
+                    ),
+                    
+                    fluidRow(
+                      box(radioButtons("ses_2", "Select a Socioeconomic Status",
+                                       choices = 1:3,
+                                       selected = 1,
+                                       inline = TRUE)),
+                      box(radioButtons("income_2", "Select a Income Bracket",
+                                       choices = 1:7,
+                                       selected = 1,
+                                       inline = TRUE)),
+
+                      box(radioButtons("gender_2", "Select a Gender",
+                                       choices = c("F", "M"),
+                                       selected = "F",
+                                       inline = TRUE),
+                          width = 6),
+                      box(radioButtons("edu_2", "College Educated?",
+                                       choices = c("Yes", "No"),
+                                       selected = "Yes",
+                                       inline = TRUE),
+                          width = 6)
+                    )
                   )
-                  
                 ),
-                
-                
-                ### single donor ----
-                
-                h1("Predict for a single volunteer"),
-                fluidRow(
-                  valueBoxOutput("prediction_2", width = 6)
-                ),
-                
-                fluidRow(
-                  box(selectizeInput("state_2", "Select a State",
-                                     choices = states,
-                                     selected = "AK"),
-                      height = "100px",
-                      width = 4),
-                  box(sliderInput("age_2", "Select Age",
-                                   value = 50,
-                                   min = 0,
-                                   max = 100,
-                                   step = 1),
-                      height = "100px",
-                      width = 4),
-                  box(sliderInput("n_volunteer", 
-                                   "Select Times of Previous Volunteerings",
-                                   value = 3,
-                                   min = 0,
-                                  max = 100,
-                                   step = 1),
-                      width = 4,
-                      height = "100px")
-                ),
-                
-                fluidRow(
-                  box(radioButtons("ses_2", "Select a Socioeconomic Status",
-                                   choices = 1:3,
-                                   selected = 1,
-                                   inline = TRUE)),
-                  box(radioButtons("income_2", "Select a Income Bracket",
-                                   choices = 1:7,
-                                   selected = 1,
-                                   inline = TRUE)),
-                  # box(radioButtons("wealth", "Select a Wealth Bracket",
-                  #                  choices = 1:7,
-                  #                  selected = 1,
-                  #                  inline = TRUE)),
-                  
-                  box(radioButtons("gender_2", "Select a Gender",
-                                   choices = c("F", "M"),
-                                   selected = "F",
-                                   inline = TRUE),
-                      width = 6),
-                  box(radioButtons("edu_2", "College Educated?",
-                                   choices = c("Yes", "No"),
-                                   selected = "Yes",
-                                   inline = TRUE),
-                      width = 6)
-                )
-                
-              
               ),
               
               

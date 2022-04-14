@@ -1,6 +1,6 @@
 Package: donorSupportSys
 Title: Donor Support System
-Version: 0.1
+Version: 0.2
 Authors@R: person('AUTHOR_FIRST', 'AUTHOR_LAST', email = 'AUTHOR@MAIL.COM', role = c('cre', 'aut'))
 Description: Manage and analyze donor data.
 License: MIT + file LICENSE
@@ -17,11 +17,13 @@ Imports:
     golem (>= 0.3.1),
     htmltools,
     infer,
+    leaflet,
     parsnip,
     processx,
     purrr,
     readr,
     recipes,
+    sf,
     shiny (>= 1.7.1),
     shinydashboard,
     shinyjs,

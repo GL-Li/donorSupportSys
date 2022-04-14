@@ -34,6 +34,8 @@ usethis::use_package("shinydashboard")
 usethis::use_package("shinyWidgets")
 usethis::use_package("shinyBS", "Depends")
 usethis::use_package("shinyjs")
+usethis::use_package("leaflet")
+usethis::use_package("sf")
 
 ## Add modules ----
 ## Create a module infrastructure in R/
@@ -47,6 +49,7 @@ golem::add_module("visualization")
 ## Add helper functions ----
 ## Creates fct_* and utils_*
 golem::add_fct("helpers") 
+golem::add_fct("plot_leaflet")
 # golem::add_utils( "helpers" )
 
 ## External resources

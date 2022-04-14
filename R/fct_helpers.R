@@ -43,6 +43,10 @@ plot_binary <- function(x,
 # pie plot
 plot_pie <- function(y, title = "", .data = dat_donor){
     .data %>%
+        mutate(college = ifelse(college == 0, "Below BA", "BA or Above"),
+               ses = case_when(ses == 1 ~ "High",
+                               ses == 2 ~ "Average",
+                               ses == 3 ~ "Low")) %>%
         count(get(y)) %>%
         # mutate(`get(y)` = factor(`get(y)`)) %>%
         mutate(`get(y)` = reorder(`get(y)`, n)) %>%
