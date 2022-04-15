@@ -159,18 +159,38 @@ app_server <- function( input, output, session ) {
   
 
   
-  dat_0 <- mod_uploadfile_server("uploadfile_pred_1", mdl = mod)
+  dat0 <- mod_upload_file_general_server("uploadfile_pred_1")
+  
+  dat_pred <- reactive({
+      dat0() %>%
+          bind_cols(predict(mod, ., type = "prob")[, 2] %>%
+                        round(4)) %>%
+          bind_cols(predict(mod, .)) %>%
+          rename(predicted_prob = .pred_1,
+                 predicted_result = .pred_class)
+  })
   
   output$table <- DT::renderDataTable({
-    dat_0()
+    dat_pred()
   })
   
   output$download <- downloadHandler(
     filename = function() {"prediction.csv"},
     content = function(file) {
-      write.csv(dat_0(), file, row.names = FALSE)
+      write.csv(dat_pred(), file, row.names = FALSE)
     }
   )
+  
+  output$age_prob <- renderPlot({
+      plot_pred_bar(mod, dat0(), "age") +
+          labs(x = "Age")
+  })
+  
+  output$n_donation_prob <- renderPlot({
+      plot_pred_bar(mod, dat0(), "n_donation") +
+          scale_x_continuous(limits = c(1, 70)) +
+          labs(x = "Number of Previous Donations")
+  })
   
   
   ## predictive visualization ----
@@ -183,16 +203,16 @@ app_server <- function( input, output, session ) {
       labs(x = NULL)
   })
   
-  output$age_prob <- renderPlot({
-    plot_pred_bar(mod, dat1(), "age") +
-      labs(x = "Age")
-  })
-  
-  output$n_donation_prob <- renderPlot({
-    plot_pred_bar(mod, dat1(), "n_donation") +
-      scale_x_continuous(limits = c(1, 70)) +
-      labs(x = "Number of Previous Donations")
-  })
+  # output$age_prob <- renderPlot({
+  #   plot_pred_bar(mod, dat1(), "age") +
+  #     labs(x = "Age")
+  # })
+  # 
+  # output$n_donation_prob <- renderPlot({
+  #   plot_pred_bar(mod, dat1(), "n_donation") +
+  #     scale_x_continuous(limits = c(1, 70)) +
+  #     labs(x = "Number of Previous Donations")
+  # })
   
   output$ses_prob <- renderPlot({
     plot_pred_bar(mod, dat1(), "ses") +
