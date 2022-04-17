@@ -193,10 +193,7 @@ app_ui <- function(request) {
                              icon = icon("chart-bar")),
                     menuItem("Predictive analysis",
                              tabName = "predictive_2",
-                             icon = icon("brain")),
-                    menuItem("Predictive visualization",
-                             tabName = "visualization_2",
-                             icon =icon("chart-bar"))
+                             icon = icon("brain"))
                 ),
                 
                 br(),
@@ -246,20 +243,29 @@ app_ui <- function(request) {
                             ### batch of donors ----
                             tabPanel(
                                 "Predict for a batch of volunteers",
+                                
                                 fluidRow(
                                     column(
-                                        4,
-                                        box(mod_uploadfile_ui("uploadfile_pred_2"),
-                                            width = 12),
-                                        box(downloadButton("download_2", "Download predicitons"),
-                                            width = 12)
-                                    ),
-                                    column(
-                                        8,
-                                        DT::dataTableOutput("table_2")
+                                        6,
+                                        mod_upload_file_general_ui("uploadfile_pred_2")
                                     )
+                                ),
+                                
+                                fluidRow(
+                                    DT::dataTableOutput("table_2"),
+                                    downloadButton("download_2", "Download predicitons")
+                                ),
+                                
+                                br(),
+                                br(),
+                                br(),
+                                
+                                fluidRow(
+                                    column(6, plotOutput("age_prob_2", height = plot_height)),
+                                    column(6, plotOutput("n_donation_prob_2", height = plot_height))
                                 )
                             ),
+                            
                             
                             ### single donor ----
                             tabPanel(
@@ -314,33 +320,33 @@ app_ui <- function(request) {
                                 )
                             )
                         ),
-                    ),
-                    
-                    
-                    ## Predictive visualization ----
-                    
-                    tabItem(
-                        tabName = "visualization_2",
-                        # mod_visualization_ui("visualization_1")
-                        mod_upload_file_general_ui("upload_file_general_2"),
-                        
-                        fluidRow(
-                            plotOutput("state_prob_2", height = plot_height),
-                            column(6, plotOutput("age_prob_2", height = plot_height)),
-                            column(6, plotOutput("n_donation_prob_2", height = plot_height))
-                        ),
-                        
-                        fluidRow(
-                            column(6, plotOutput("ses_prob_2", height = plot_height)),
-                            column(6, plotOutput("income_prob_2", height = plot_height))
-                        ),
-                        
-                        fluidRow(
-                            column(6, plotOutput("gender_prob_2", height = plot_height)),
-                            column(6, plotOutput("college_prob_2", height = plot_height))
-                        )
-                        
                     )
+                    
+                    
+                    # ## Predictive visualization ----
+                    # 
+                    # tabItem(
+                    #     tabName = "visualization_2",
+                    #     # mod_visualization_ui("visualization_1")
+                    #     mod_upload_file_general_ui("upload_file_general_2"),
+                    #     
+                    #     fluidRow(
+                    #         plotOutput("state_prob_2", height = plot_height),
+                    #         column(6, plotOutput("age_prob_2", height = plot_height)),
+                    #         column(6, plotOutput("n_donation_prob_2", height = plot_height))
+                    #     ),
+                    #     
+                    #     fluidRow(
+                    #         column(6, plotOutput("ses_prob_2", height = plot_height)),
+                    #         column(6, plotOutput("income_prob_2", height = plot_height))
+                    #     ),
+                    #     
+                    #     fluidRow(
+                    #         column(6, plotOutput("gender_prob_2", height = plot_height)),
+                    #         column(6, plotOutput("college_prob_2", height = plot_height))
+                    #     )
+                    #     
+                    # )
                     
                     
                     

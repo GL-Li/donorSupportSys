@@ -243,68 +243,109 @@ app_server <- function( input, output, session ) {
   
   ### batch donnor prediction ----
   
-  dat_2 <- dat <- mod_uploadfile_server("uploadfile_pred_2", mdl = mod_2)
+  dat2 <- mod_upload_file_general_server("uploadfile_pred_2")
+  
+  dat_pred_2 <- reactive({
+      dat2() %>%
+          bind_cols(predict(mod_2, ., type = "prob")[, 2] %>%
+                        round(4)) %>%
+          bind_cols(predict(mod_2, .)) %>%
+          rename(predicted_prob = .pred_1,
+                 predicted_result = .pred_class)
+  })
   
   output$table_2 <- DT::renderDataTable({
-    dat_2()
+      dat_pred_2()
   })
   
   output$download_2 <- downloadHandler(
-    filename = function() {"prediction.csv"},
-    content = function(file) {
-      write.csv(dat_2(), file, row.names = FALSE)
-    }
+      filename = function() {"prediction.csv"},
+      content = function(file) {
+          write.csv(dat_pred_2(), file, row.names = FALSE)
+      }
   )
   
+  output$age_prob_2 <- renderPlot({
+      plot_pred_bar(mod_2, dat2(), "age") +
+          labs(x = "Age")
+  })
+  
+  output$n_donation_prob_2 <- renderPlot({
+      plot_pred_bar(mod_2, dat2(), "n_volunteering") +
+          scale_x_continuous(limits = c(1, 70)) +
+          labs(x = "Number of Previous Donations")
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  # dat_2 <- dat <- mod_uploadfile_server("uploadfile_pred_2", mdl = mod_2)
+  # 
+  # output$table_2 <- DT::renderDataTable({
+  #   dat_2()
+  # })
+  # 
+  # output$download_2 <- downloadHandler(
+  #   filename = function() {"prediction.csv"},
+  #   content = function(file) {
+  #     write.csv(dat_2(), file, row.names = FALSE)
+  #   }
+  # )
+  # 
   
   
   ## predictive visualization ----
   # mod_visualization_server("visualization_1", mod)
-  
-  dat2 <- mod_upload_file_general_server("upload_file_general_2")
-  
-  output$state_prob_2 <- renderPlot({
-    plot_pred_bar(mod_2, dat2(), "state") +
-      labs(x = NULL)
-  })
-  
-  output$age_prob_2 <- renderPlot({
-    plot_pred_bar(mod_2, dat2(), "age") +
-      labs(x = "Age")
-  })
-  
-  output$n_donation_prob_2 <- renderPlot({
-    plot_pred_bar(mod_2, dat2(), "n_volunteering") +
-      scale_x_continuous(limits = c(1, 70)) +
-      labs(x = "Number of Previous Volunteering")
-  })
-  
-  output$ses_prob_2 <- renderPlot({
-    plot_pred_bar(mod_2, dat2(), "ses") +
-      scale_x_continuous(breaks = 1:3, 
-                         labels = c("High", "Average", "Low")) +
-      labs(x = "Socioeconomic Status")
-  })
-  
-  output$income_prob_2 <- renderPlot({
-    plot_pred_bar(mod_2, dat2(), "income") +
-      scale_x_continuous(breaks = 1:7) +
-      labs(x = "Income Group")
-  })
-  
-  output$gender_prob_2 <- renderPlot({
-    plot_pred_bar(mod_2, dat2(), "gender") +
-      scale_x_discrete(breaks = c("M", "F"), 
-                       labels = c("Male", "Female")) +
-      labs(x = "Gender")
-  })
-  
-  output$college_prob_2 <- renderPlot({
-    plot_pred_bar(mod_2, dat2(), "college") +
-      scale_x_continuous(breaks = 0:1, 
-                         labels = c("No College", "College or Above")) +
-      labs(x = "Education")
-  })
+  # 
+  # dat2 <- mod_upload_file_general_server("upload_file_general_2")
+  # 
+  # output$state_prob_2 <- renderPlot({
+  #   plot_pred_bar(mod_2, dat2(), "state") +
+  #     labs(x = NULL)
+  # })
+  # 
+  # output$age_prob_2 <- renderPlot({
+  #   plot_pred_bar(mod_2, dat2(), "age") +
+  #     labs(x = "Age")
+  # })
+  # 
+  # output$n_donation_prob_2 <- renderPlot({
+  #   plot_pred_bar(mod_2, dat2(), "n_volunteering") +
+  #     scale_x_continuous(limits = c(1, 70)) +
+  #     labs(x = "Number of Previous Volunteering")
+  # })
+  # 
+  # output$ses_prob_2 <- renderPlot({
+  #   plot_pred_bar(mod_2, dat2(), "ses") +
+  #     scale_x_continuous(breaks = 1:3, 
+  #                        labels = c("High", "Average", "Low")) +
+  #     labs(x = "Socioeconomic Status")
+  # })
+  # 
+  # output$income_prob_2 <- renderPlot({
+  #   plot_pred_bar(mod_2, dat2(), "income") +
+  #     scale_x_continuous(breaks = 1:7) +
+  #     labs(x = "Income Group")
+  # })
+  # 
+  # output$gender_prob_2 <- renderPlot({
+  #   plot_pred_bar(mod_2, dat2(), "gender") +
+  #     scale_x_discrete(breaks = c("M", "F"), 
+  #                      labels = c("Male", "Female")) +
+  #     labs(x = "Gender")
+  # })
+  # 
+  # output$college_prob_2 <- renderPlot({
+  #   plot_pred_bar(mod_2, dat2(), "college") +
+  #     scale_x_continuous(breaks = 0:1, 
+  #                        labels = c("No College", "College or Above")) +
+  #     labs(x = "Education")
+  # })
   
   
   
