@@ -173,10 +173,7 @@ app_server <- function( input, output, session ) {
             labs(x = "Number of Previous Donations")
     })
     
-    
-    
-    
-    
+
     
     # switch between donor and volunteer ======================================
     

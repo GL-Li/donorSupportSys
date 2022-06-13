@@ -41,7 +41,7 @@ app_ui <- function(request) {
                     br(),
                     br(),
                     
-                    actionButton("donor_switch", "Go to Volumteer",
+                    actionButton("donor_switch", "Go to Volunteer",
                                  style="color: #fff; background-color: rgb(50, 60, 50); border-color: rgb(50, 60, 50)")
                 ),
                 
