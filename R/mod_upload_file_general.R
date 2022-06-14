@@ -7,7 +7,7 @@
 #' @noRd 
 #'
 #' @importFrom shiny NS tagList 
-mod_upload_file_general_ui <- function(id, label = "Choose a file"){
+mod_upload_file_general_ui <- function(id, label = "Upload a file"){
   ns <- NS(id)
   tagList(
  

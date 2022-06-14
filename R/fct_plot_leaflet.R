@@ -6,7 +6,9 @@
 #'
 #' @noRd
 
-plot_leaflet <- function(.data, alpha = 0.7, title = "Number of Donnors"){
+plot_leaflet <- function(.data, alpha = 0.7, 
+                         title = "Number of Donnors",
+                         type = "donors"){
     
     # this is sf problem. Have to load sf here. Otherwise error:
     # All columns in a tibble must be vectors. Column `geometry` is a 
@@ -34,7 +36,7 @@ plot_leaflet <- function(.data, alpha = 0.7, title = "Number of Donnors"){
     leaflet() %>%
         addProviderTiles(providers$CartoDB.Positron) %>%
         setView(-110.5, 40.5, zoom = 4) %>%
-        add_polygons(sf, alpha) %>%
+        add_polygons(sf, alpha, type) %>%
         # add_circles(type) %>%
         # addControl("Data: Decennial Census 2010 and 2020", 
         #            position = "topright") %>%
@@ -59,7 +61,7 @@ pal <- function(.data){
 }
 
 
-add_polygons <- function(map, .data, alpha){
+add_polygons <- function(map, .data, alpha, type){
     
     # n_count <- .data %>%
     #     dplyr::group_by(state) %>%
@@ -87,6 +89,6 @@ add_polygons <- function(map, .data, alpha){
                     layerId = ~state,  # one id for each polygon
                     popup = ~paste0(
                         "<b>", state, "</b>", "<br>",
-                        "<b>", n, "</b>", " donors"
+                        "<b>", n, "</b> ", type
                     ))
 }

@@ -11,10 +11,11 @@ mod_descriptive_volunteer_ui <- function(id){
   plot_height_pie = "500px"
   ns <- NS(id)
   tagList(
-    selectizeInput(ns("volunteer_data"), "Select a dataset",
-                   choices = c("volunteer_data_group_1",
-                               "volunteer_data_group_2"),
-                   selected = "volunteer_data_group_1"),
+      fileInput(ns("volunteer_upload_descriptive"), "Upload Data",
+                multiple = FALSE,
+                accept = c("text/csv",
+                           "text/comma-separated-values,text/plain",
+                           ".csv")),
     
     fluidRow(
       valueBoxOutput(ns("volunteer_info"), width = 3),
@@ -63,7 +64,9 @@ mod_descriptive_volunteer_server <- function(id){
     ns <- session$ns
  
     dat_volunteer <- reactive({
-      get(input$volunteer_data)
+        req(input$volunteer_upload_descriptive)
+        read.csv(input$volunteer_upload_descriptive$datapath, 
+                 stringsAsFactors = FALSE)
     })
     
     ### numbers ----
@@ -143,7 +146,7 @@ mod_descriptive_volunteer_server <- function(id){
     output$map <- renderLeaflet({
       r_colors <- rgb(t(col2rgb(colors()) / 255))
       names(r_colors) <- colors()
-      plot_leaflet(dat_volunteer(), title = "Number of Volunteers")
+      plot_leaflet(dat_volunteer(), title = "Number of Volunteers", type = "volunteers")
     })
     
   })
