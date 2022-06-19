@@ -13,81 +13,14 @@ app_server <- function( input, output, session ) {
     mod_home_server("home_1")
     
     
-    ## descriptive analysis ====================================================
+    ## descriptive analysis ----
     
     mod_descriptive_server("descriptive_1")
     
     
+    ## Predictive analysis ----
     
-    output$prediction <- renderValueBox({
-        req(input$n_donation, input$age)
-        
-        state <- input$state
-        ses <- input$ses
-        age <- input$age
-        income <- input$income
-        gender <- input$gender
-        college <- ifelse(input$edu == "Yes", 1, 0)
-        n_donatiion <- input$n_donation
-        
-        new_dat <- data.frame(
-            state = state,
-            ses = as.integer(ses),
-            income = as.integer(income),
-            age = age,
-            income = as.integer(income),
-            gender = gender,
-            college = as.integer(college),
-            n_donation = as.integer(n_donatiion)
-        )
-        
-        prob <- predict(mod, new_dat, type = "prob")[2] %>%
-            round(4)
-        
-        valueBox(value = ifelse(prob > 0.1522, 
-                                "More likely to donate again than an average donor", 
-                                "Less likely to donate again than an average donor"),
-                 subtitle = paste0("Predicted Probability = ", prob),
-                 icon = icon("heart"),
-                 color = ifelse(prob > 0.1522, "fuchsia", "light-blue"))
-    })
-    
-    ### batch donnor prediction ----
-    
-    
-    
-    dat0 <- mod_upload_file_general_server("uploadfile_pred_1")
-    
-    dat_pred <- reactive({
-        dat0() %>%
-            bind_cols(predict(mod, ., type = "prob")[, 2] %>%
-                          round(4)) %>%
-            bind_cols(predict(mod, .)) %>%
-            rename(predicted_prob = .pred_1,
-                   predicted_result = .pred_class)
-    })
-    
-    output$table <- DT::renderDataTable({
-        dat_pred()
-    })
-    
-    output$download <- downloadHandler(
-        filename = function() {"prediction.csv"},
-        content = function(file) {
-            write.csv(dat_pred(), file, row.names = FALSE)
-        }
-    )
-    
-    output$age_prob <- renderPlot({
-        plot_pred_bar(mod, dat0(), "age") +
-            labs(x = "Age")
-    })
-    
-    output$n_donation_prob <- renderPlot({
-        plot_pred_bar(mod, dat0(), "n_donation") +
-            scale_x_continuous(limits = c(1, 70)) +
-            labs(x = "Number of Previous Donations")
-    })
+    mod_predictive_server("predictive_1")
     
     
     

@@ -44,6 +44,7 @@ golem::add_module("uploadfile")
 golem::add_module("upload_file_general")
 golem::add_module("descriptive")
 golem::add_module("descriptive_volunteer")
+golem::add_module("predictive")
 golem::add_module("visualization")
 
 ## Add helper functions ----
