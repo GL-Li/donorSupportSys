@@ -46,6 +46,8 @@ golem::add_module("descriptive")
 golem::add_module("descriptive_volunteer")
 golem::add_module("predictive")
 golem::add_module("predictive_volunteer")
+golem::add_module("about")
+golem::add_module("about_volunteer")
 golem::add_module("visualization")
 
 ## Add helper functions ----

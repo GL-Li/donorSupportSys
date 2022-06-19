@@ -77,7 +77,7 @@ app_ui <- function(request) {
                         
                         tabItem(
                             tabName = "about",
-                            h1("to be filled")
+                            mod_about_ui("about_1")
                         ),
                         
                         ## predictive analysis ----
@@ -155,7 +155,7 @@ app_ui <- function(request) {
                         
                         tabItem(
                             tabName = "about_2",
-                            h1("to be filled")
+                            mod_about_volunteer_ui("about_volunteer_1")
                         ),
                         
                         
