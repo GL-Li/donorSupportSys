@@ -8,8 +8,6 @@
 #'
 #' @importFrom shiny NS tagList 
 mod_descriptive_ui <- function(id){
-    plot_height <- "200px"
-    plot_height_pie <- "500px"
     ns <- NS(id)
     tagList(
         fileInput(ns("donor_upload_descriptive"), "Upload Data",
@@ -32,7 +30,6 @@ mod_descriptive_ui <- function(id){
         ),
         
         fluidRow(
-            # plotOutput(ns("by_state"), height = plot_height),
             leafletOutput(ns("map"), height = "600px")
             
         ),
@@ -41,23 +38,23 @@ mod_descriptive_ui <- function(id){
         h2("Donations distributions by age and time"),
         
         fluidRow(
-            column(4, plotOutput(ns("by_age"), height = plot_height)),
-            column(4, plotOutput(ns("by_n_donation"), height = plot_height)),
-            column(4, plotOutput(ns("donor_age_density"), height = plot_height))
+            column(4, plotOutput(ns("by_age"), height = "200px")),
+            column(4, plotOutput(ns("by_n_donation"), height = "200px")),
+            column(4, plotOutput(ns("donor_age_density"), height = "200px"))
         ),
         hr(),
         
         h2("Other indicators"),
         
         fluidRow(
-            column(6, plotOutput(ns("pie_gender"), height = plot_height_pie)),
-            column(6, plotOutput(ns("pie_ses"), height = plot_height_pie))
+            column(6, plotOutput(ns("pie_gender"), height = "500px")),
+            column(6, plotOutput(ns("pie_ses"), height = "500px"))
             
         ),
         
         fluidRow(
-            column(6, plotOutput(ns("pie_college"), height = plot_height_pie)),
-            column(6, plotOutput(ns("pie_income"), height = plot_height_pie))
+            column(6, plotOutput(ns("pie_college"), height = "500px")),
+            column(6, plotOutput(ns("pie_income"), height = "500px"))
         )
     )
 }

@@ -8,8 +8,6 @@
 #'
 #' @importFrom shiny NS tagList 
 mod_predictive_volunteer_ui <- function(id){
-    plot_height <- "200px"
-    plot_height_pie <- "500px"
   ns <- NS(id)
   tagList(
       fluidRow(
@@ -48,8 +46,8 @@ mod_predictive_volunteer_ui <- function(id){
               br(),
               
               fluidRow(
-                  column(6, plotOutput(ns("age_prob_2"), height = plot_height)),
-                  column(6, plotOutput(ns("n_donation_prob_2"), height = plot_height))
+                  column(6, plotOutput(ns("age_prob_2"), height = "200px")),
+                  column(6, plotOutput(ns("n_donation_prob_2"), height = "200px"))
               )
           ),
           

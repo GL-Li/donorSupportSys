@@ -19,10 +19,10 @@ states <- c("AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL",
 usethis::use_data(states, overwrite = TRUE)
 
 plot_height = "200px"
-usethis::use_data(plot_height)
+usethis::use_data(plot_height, overwrite = TRUE)
 
-plot_height_pie = "300px"
-usethis::use_data(plot_height_pie)
+plot_height_pie = "500px"
+usethis::use_data(plot_height_pie, overwrite = TRUE)
 
 
 # sample dataset ----
