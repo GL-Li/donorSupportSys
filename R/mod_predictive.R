@@ -8,6 +8,8 @@
 #'
 #' @importFrom shiny NS tagList 
 mod_predictive_ui <- function(id){
+    plot_height <- "200px"
+    plot_height_pie <- "500px"
   ns <- NS(id)
   tagList(
       fluidRow(

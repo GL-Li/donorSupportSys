@@ -19,6 +19,7 @@ Imports:
     infer,
     leaflet,
     parsnip,
+    pkgload,
     processx,
     purrr,
     readr,

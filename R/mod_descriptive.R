@@ -8,7 +8,8 @@
 #'
 #' @importFrom shiny NS tagList 
 mod_descriptive_ui <- function(id){
-    plot_height_pie = "500px"
+    plot_height <- "200px"
+    plot_height_pie <- "500px"
     ns <- NS(id)
     tagList(
         fileInput(ns("donor_upload_descriptive"), "Upload Data",
