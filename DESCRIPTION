@@ -1,6 +1,6 @@
 Package: donorSupportSys
 Title: Donor Support System
-Version: 0.3
+Version: 0.4
 Authors@R: person('AUTHOR_FIRST', 'AUTHOR_LAST', email = 'AUTHOR@MAIL.COM', role = c('cre', 'aut'))
 Description: Manage and analyze donor data.
 License: MIT + file LICENSE

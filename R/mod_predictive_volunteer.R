@@ -1,4 +1,4 @@
-#' predictive UI Function
+#' predictive_volunteer UI Function
 #'
 #' @description A shiny Module.
 #'
@@ -7,23 +7,24 @@
 #' @noRd 
 #'
 #' @importFrom shiny NS tagList 
-mod_predictive_ui <- function(id){
+mod_predictive_volunteer_ui <- function(id){
   ns <- NS(id)
   tagList(
       fluidRow(
           valueBox(value = "Donation Decision Support System",
-                   subtitle = "Is the donnor going to donate again?",
+                   subtitle = "Is the volunteer going to volunteer again?",
                    width = 12,
                    color = "blue")
       ),
+      
       
       tabsetPanel(
           type = "tabs",
           
           ### batch of donors ----
-          
           tabPanel(
-              "Predict for a batch of donors",
+              "Predict for a batch of volunteers",
+              
               fluidRow(
                   column(
                       6,
@@ -36,8 +37,8 @@ mod_predictive_ui <- function(id){
               ),
               
               fluidRow(
-                  DT::dataTableOutput(ns("table")),
-                  downloadButton(ns("download"), "Download predicitons")
+                  DT::dataTableOutput(ns("table_2")),
+                  downloadButton(ns("download_2"), "Download predicitons")
               ),
               
               br(),
@@ -45,58 +46,58 @@ mod_predictive_ui <- function(id){
               br(),
               
               fluidRow(
-                  column(6, plotOutput(ns("age_prob"), height = plot_height)),
-                  column(6, plotOutput(ns("n_donation_prob"), height = plot_height))
+                  column(6, plotOutput(ns("age_prob_2"), height = plot_height)),
+                  column(6, plotOutput(ns("n_donation_prob_2"), height = plot_height))
               )
           ),
           
-          ### single donor ----
           
+          ### single donor ----
           tabPanel(
-              "Predict for a single donor",
+              "Predict for a single volunteer",
               fluidRow(
-                  valueBoxOutput(ns("prediction"), width = 12)
+                  valueBoxOutput(ns("prediction_2"), width = 12)
               ),
               
               fluidRow(
-                  box(selectizeInput(ns("state"), "Select a State",
+                  box(selectizeInput(ns("state_2"), "Select a State",
                                      choices = states,
-                                     selected = "AK"), 
+                                     selected = "AK"),
                       height = "100px",
                       width = 4),
-                  box(sliderInput(ns("age"), "Select Age",
+                  box(sliderInput(ns("age_2"), "Select Age",
                                   value = 50,
                                   min = 0,
                                   max = 100,
                                   step = 1),
                       height = "100px",
                       width = 4),
-                  box(sliderInput(ns("n_donation"), 
-                                  "Select Number of Previous Donations",
+                  box(sliderInput(ns("n_volunteer"), 
+                                  "Select Times of Previous Volunteerings",
                                   value = 3,
                                   min = 0,
-                                  max =100,
+                                  max = 100,
                                   step = 1),
                       width = 4,
                       height = "100px")
               ),
               
               fluidRow(
-                  box(radioButtons(ns("ses"), "Select a Socioeconomic Status",
+                  box(radioButtons(ns("ses_2"), "Select a Socioeconomic Status",
                                    choices = 1:3,
                                    selected = 1,
                                    inline = TRUE)),
-                  box(radioButtons(ns("income"), "Select a Income Bracket",
+                  box(radioButtons(ns("income_2"), "Select a Income Bracket",
                                    choices = 1:7,
                                    selected = 1,
                                    inline = TRUE)),
                   
-                  box(radioButtons(ns("gender"), "Select a Gender",
+                  box(radioButtons(ns("gender_2"), "Select a Gender",
                                    choices = c("F", "M"),
                                    selected = "F",
                                    inline = TRUE),
                       width = 6),
-                  box(radioButtons(ns("edu"), "College Educated?",
+                  box(radioButtons(ns("edu_2"), "College Educated?",
                                    choices = c("Yes", "No"),
                                    selected = "Yes",
                                    inline = TRUE),
@@ -104,28 +105,28 @@ mod_predictive_ui <- function(id){
               )
           )
       )
- 
   )
 }
     
-#' predictive Server Functions
+#' predictive_volunteer Server Functions
 #'
 #' @noRd 
-mod_predictive_server <- function(id){
+mod_predictive_volunteer_server <- function(id){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
+ 
+    ### single donor prediction ----
     
-    ### singel donor predictions ----
-    output$prediction <- renderValueBox({
-        req(input$n_donation, input$age)
+    output$prediction_2 <- renderValueBox({
+        req(input$n_volunteer, input$age_2)
         
-        state <- input$state
-        ses <- input$ses
-        age <- input$age
-        income <- input$income
-        gender <- input$gender
-        college <- ifelse(input$edu == "Yes", 1, 0)
-        n_donatiion <- input$n_donation
+        state <- input$state_2
+        ses <- input$ses_2
+        age <- input$age_2
+        income <- input$income_2
+        gender <- input$gender_2
+        college <- ifelse(input$edu_2 == "Yes", 1, 0)
+        n_volunteer <- input$n_volunteer
         
         new_dat <- data.frame(
             state = state,
@@ -135,65 +136,64 @@ mod_predictive_server <- function(id){
             income = as.integer(income),
             gender = gender,
             college = as.integer(college),
-            n_donation = as.integer(n_donatiion)
+            n_volunteering = as.integer(n_volunteer)
         )
         
-        prob <- predict(mod, new_dat, type = "prob")[2] %>%
+        prob <- predict(mod_2, new_dat, type = "prob")[2] %>%
             round(4)
         
-        valueBox(value = ifelse(prob > 0.1522, 
-                                "More likely to donate again than an average donor", 
-                                "Less likely to donate again than an average donor"),
+        valueBox(value = ifelse(prob > 0.1495, 
+                                "More likely to volunteer again than an average volunteer", 
+                                "Less likely to volunteer again than an average volunteer"),
                  subtitle = paste0("Predicted Probability = ", prob),
                  icon = icon("heart"),
-                 color = ifelse(prob > 0.1522, "fuchsia", "light-blue"))
+                 color = ifelse(prob > 0.1495, "fuchsia", "light-blue"))
     })
     
     ### batch donnor prediction ----
     
-    # dat0 <- mod_upload_file_general_server("uploadfile_pred_1")
-    dat0 <- reactive({
+    dat2 <- reactive({
         req(input$file_upload)
         read.csv(input$file_upload$datapath, 
                  stringsAsFactors = FALSE)
     })
     
-    dat_pred <- reactive({
-        dat0() %>%
-            bind_cols(predict(mod, ., type = "prob")[, 2] %>%
+    dat_pred_2 <- reactive({
+        dat2() %>%
+            bind_cols(predict(mod_2, ., type = "prob")[, 2] %>%
                           round(4)) %>%
-            bind_cols(predict(mod, .)) %>%
+            bind_cols(predict(mod_2, .)) %>%
             rename(predicted_prob = .pred_1,
                    predicted_result = .pred_class)
     })
     
-    output$table <- DT::renderDataTable({
-        dat_pred()
+    output$table_2 <- DT::renderDataTable({
+        dat_pred_2()
     })
     
-    output$download <- downloadHandler(
+    output$download_2 <- downloadHandler(
         filename = function() {"prediction.csv"},
         content = function(file) {
-            write.csv(dat_pred(), file, row.names = FALSE)
+            write.csv(dat_pred_2(), file, row.names = FALSE)
         }
     )
     
-    output$age_prob <- renderPlot({
-        plot_pred_bar(mod, dat0(), "age") +
+    output$age_prob_2 <- renderPlot({
+        plot_pred_bar(mod_2, dat2(), "age") +
             labs(x = "Age")
     })
     
-    output$n_donation_prob <- renderPlot({
-        plot_pred_bar(mod, dat0(), "n_donation") +
+    output$n_donation_prob_2 <- renderPlot({
+        plot_pred_bar(mod_2, dat2(), "n_volunteering") +
             scale_x_continuous(limits = c(1, 70)) +
             labs(x = "Number of Previous Donations")
     })
- 
+    
   })
 }
     
 ## To be copied in the UI
-# mod_predictive_ui("predictive_1")
+# mod_predictive_volunteer_ui("predictive_volunteer_1")
     
 ## To be copied in the server
-# mod_predictive_server("predictive_1")
+# mod_predictive_volunteer_server("predictive_volunteer_1")

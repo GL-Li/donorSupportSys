@@ -36,76 +36,7 @@ app_server <- function( input, output, session ) {
     
     
     ## predictive analysis =====================================================
-    ### single donor prediction ----
-    
-    output$prediction_2 <- renderValueBox({
-        req(input$n_volunteer, input$age_2)
-        
-        state <- input$state_2
-        ses <- input$ses_2
-        age <- input$age_2
-        income <- input$income_2
-        gender <- input$gender_2
-        college <- ifelse(input$edu_2 == "Yes", 1, 0)
-        n_volunteer <- input$n_volunteer
-        
-        new_dat <- data.frame(
-            state = state,
-            ses = as.integer(ses),
-            income = as.integer(income),
-            age = age,
-            income = as.integer(income),
-            gender = gender,
-            college = as.integer(college),
-            n_volunteering = as.integer(n_volunteer)
-        )
-        
-        prob <- predict(mod_2, new_dat, type = "prob")[2] %>%
-            round(4)
-        
-        valueBox(value = ifelse(prob > 0.1495, 
-                                "More likely to volunteer again than an average volunteer", 
-                                "Less likely to volunteer again than an average volunteer"),
-                 subtitle = paste0("Predicted Probability = ", prob),
-                 icon = icon("heart"),
-                 color = ifelse(prob > 0.1495, "fuchsia", "light-blue"))
-    })
-    
-    ### batch donnor prediction ----
-    
-    dat2 <- mod_upload_file_general_server("uploadfile_pred_2")
-    
-    dat_pred_2 <- reactive({
-        dat2() %>%
-            bind_cols(predict(mod_2, ., type = "prob")[, 2] %>%
-                          round(4)) %>%
-            bind_cols(predict(mod_2, .)) %>%
-            rename(predicted_prob = .pred_1,
-                   predicted_result = .pred_class)
-    })
-    
-    output$table_2 <- DT::renderDataTable({
-        dat_pred_2()
-    })
-    
-    output$download_2 <- downloadHandler(
-        filename = function() {"prediction.csv"},
-        content = function(file) {
-            write.csv(dat_pred_2(), file, row.names = FALSE)
-        }
-    )
-    
-    output$age_prob_2 <- renderPlot({
-        plot_pred_bar(mod_2, dat2(), "age") +
-            labs(x = "Age")
-    })
-    
-    output$n_donation_prob_2 <- renderPlot({
-        plot_pred_bar(mod_2, dat2(), "n_volunteering") +
-            scale_x_continuous(limits = c(1, 70)) +
-            labs(x = "Number of Previous Donations")
-    })
-    
+    mod_predictive_volunteer_server("predictive_volunteer_1")
 
     
     # switch between donor and volunteer ======================================
