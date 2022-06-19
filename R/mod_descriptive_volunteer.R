@@ -37,12 +37,17 @@ mod_descriptive_volunteer_ui <- function(id){
     
     hr(),
 
+    h2("Volunteering distribution by age and time"),
+    
     fluidRow(
-      column(6, plotOutput(ns("by_age_2"), height = plot_height)),
-      column(6, plotOutput(ns("by_n_volunteer"), height = plot_height))
+      column(4, plotOutput(ns("by_age_2"), height = plot_height)),
+      column(4, plotOutput(ns("by_n_volunteer"), height = plot_height)),
+      column(4, plotOutput(ns("volunteer_age_density"), height = plot_height))
     ),
     
     hr(),
+    
+    h2("Other indicators"),
     
     fluidRow(
       column(6, plotOutput(ns("pie_gender_2"), height = plot_height_pie)),
@@ -64,10 +69,16 @@ mod_descriptive_volunteer_server <- function(id){
     ns <- session$ns
  
     dat_volunteer <- reactive({
-        req(input$volunteer_upload_descriptive)
-        read.csv(input$volunteer_upload_descriptive$datapath, 
-                 stringsAsFactors = FALSE)
+        if (is.null(input$volunteer_upload_descriptive)) {
+            dat <- volunteer_data_group_1
+        } else {
+            dat <- read.csv(input$volunteer_upload_descriptive$datapath, 
+                            stringsAsFactors = FALSE)
+        }
+        
+        dat
     })
+
     
     ### numbers ----
     output$volunteer_info <- renderValueBox({
@@ -111,6 +122,12 @@ mod_descriptive_volunteer_server <- function(id){
     
     output$by_n_volunteer <- renderPlot({
       plot_n_volunteer(.data = dat_volunteer())
+    })
+    
+    output$volunteer_age_density <- renderPlot({
+        plot_volunteer_age_density(.data = dat_volunteer(),
+                               color = volunteer_type,
+                               color_title = "Number of\nVolunteering")
     })
     
     output$pie_gender_2 <- renderPlot({

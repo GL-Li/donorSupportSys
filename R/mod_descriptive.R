@@ -37,11 +37,16 @@ mod_descriptive_ui <- function(id){
         ),
         hr(),
         
+        h2("Donations distributions by age and time"),
+        
         fluidRow(
-            column(6, plotOutput(ns("by_age"), height = plot_height)),
-            column(6, plotOutput(ns("by_n_donation"), height = plot_height))
+            column(4, plotOutput(ns("by_age"), height = plot_height)),
+            column(4, plotOutput(ns("by_n_donation"), height = plot_height)),
+            column(4, plotOutput(ns("donor_age_density"), height = plot_height))
         ),
         hr(),
+        
+        h2("Other indicators"),
         
         fluidRow(
             column(6, plotOutput(ns("pie_gender"), height = plot_height_pie)),
@@ -64,9 +69,14 @@ mod_descriptive_server <- function(id){
         ns <- session$ns
         
         dat_donor <- reactive({
-            req(input$donor_upload_descriptive)
-            read.csv(input$donor_upload_descriptive$datapath, 
-                     stringsAsFactors = FALSE)
+            if (is.null(input$donor_upload_descriptive)) {
+                dat <- donor_data_group_1
+            } else {
+                dat <- read.csv(input$donor_upload_descriptive$datapath, 
+                                stringsAsFactors = FALSE)
+            }
+            
+            dat
         })
         
         ### numbers ----
@@ -114,6 +124,12 @@ mod_descriptive_server <- function(id){
         
         output$by_n_donation <- renderPlot({
             plot_n_donation(.data = dat_donor())
+        })
+        
+        output$donor_age_density <- renderPlot({
+            plot_donor_age_density(.data = dat_donor(),
+                                   color = donor_type,
+                                   color_title = "Number of\nDonations")
         })
         
         output$pie_gender <- renderPlot({

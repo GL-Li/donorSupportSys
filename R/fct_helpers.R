@@ -43,10 +43,11 @@ plot_binary <- function(x,
 # pie plot
 plot_pie <- function(y, title = "", .data = dat_donor){
     .data %>%
-        mutate(college = ifelse(college == 0, "Below BA", "BA or Above"),
+        mutate(college = ifelse(college == 0, "No", "Yes"),
                ses = case_when(ses == 1 ~ "High",
                                ses == 2 ~ "Average",
-                               ses == 3 ~ "Low")) %>%
+                               ses == 3 ~ "Low"),
+               gender = ifelse(gender == "M", "Male", "Female")) %>%
         count(get(y)) %>%
         # mutate(`get(y)` = factor(`get(y)`)) %>%
         mutate(`get(y)` = reorder(`get(y)`, n)) %>%
@@ -122,6 +123,35 @@ plot_n_volunteer <- function(.data = dat_volunteer){
              y = "Number of Volunteers")
 }
 
+
+plot_donor_age_density <- function(.data, color, color_title) {
+    .data %>%
+        filter(n_donation > 0) %>%
+        mutate(donor_type = cut(n_donation, 
+                                breaks = c(0, 1,  10, Inf),
+                                labels = c("1", "2-10", ">10"))) %>%
+        ggplot(aes(age, color = factor({{color}}))) +
+        geom_density() +
+        labs(x = "Age",
+             y = "Density",
+             color = color_title) +
+        theme_bw()
+}
+
+
+plot_volunteer_age_density <- function(.data, color, color_title) {
+    .data %>%
+        filter(n_volunteering > 0) %>%
+        mutate(volunteer_type = cut(n_volunteering, 
+                                breaks = c(0, 1,  10, Inf),
+                                labels = c("1", "2-10", ">10"))) %>%
+        ggplot(aes(age, color = factor({{color}}))) +
+        geom_density() +
+        labs(x = "Age",
+             y = "Density",
+             color = color_title) +
+        theme_bw()
+}
 
 
 # predictive visualization ====================================================

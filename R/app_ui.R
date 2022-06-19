@@ -33,6 +33,9 @@ app_ui <- function(request) {
                         menuItem("Descriptive analysis",
                                  tabName = "descriptive",
                                  icon = icon("chart-bar")),
+                        menuItem("About",
+                                 tabName = "about",
+                                 icon = icon("list-alt")),
                         menuItem("Predictive analysis",
                                  tabName = "predictive",
                                  icon = icon("brain"))
@@ -67,6 +70,14 @@ app_ui <- function(request) {
                             tabName = "descriptive",
                             
                             mod_descriptive_ui("descriptive_1")
+                        ),
+                        
+                        
+                        ## about ----
+                        
+                        tabItem(
+                            tabName = "about",
+                            h1("to be filled")
                         ),
                         
                         ## predictive analysis ----
@@ -191,6 +202,9 @@ app_ui <- function(request) {
                         menuItem("Descriptive analysis",
                                  tabName = "descriptive_2",
                                  icon = icon("chart-bar")),
+                        menuItem("About",
+                                 tabName = "about_2",
+                                 icon = icon("list-alt")),
                         menuItem("Predictive analysis",
                                  tabName = "predictive_2",
                                  icon = icon("brain"))
@@ -223,6 +237,14 @@ app_ui <- function(request) {
                         tabItem(
                             tabName = "descriptive_2",
                             mod_descriptive_volunteer_ui("descriptive_volunteer_1")
+                        ),
+                        
+                        
+                        ## about ----
+                        
+                        tabItem(
+                            tabName = "about_2",
+                            h1("to be filled")
                         ),
                         
                         
